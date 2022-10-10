@@ -1,5 +1,6 @@
 import { Logo } from '../../components/logo/logo';
 import { UserBlock } from '../../components/user-block/user-block';
+import { useParams } from 'react-router-dom';
 
 interface FilmInfo {
   imgSrc: string;
@@ -115,13 +116,13 @@ function ReviewDiv() {
   );
 }
 
-export function ReviewSection({
-  imgSrc,
-  title,
-  filmPage,
-  posterSrc,
-  posterAlt
-}: FilmInfo) {
+export function ReviewSection() {
+  const params = useParams();
+  const imgSrc = `img/${params.id}.jpg`;
+  const title = 'The Grand Budapest Hotel'; //temporary The Grand Budapest Hotel data
+  const filmPage = '#';
+  const posterSrc = 'img/the-grand-budapest-hotel-poster.jpg';
+  const posterAlt = 'The Grand Budapest Hotel poster';
   return (
     <section className='film-card film-card--full'>
       <FilmCardHeader imgSrc={imgSrc} title={title} filmPage={filmPage} posterSrc={posterSrc} posterAlt={posterAlt} />

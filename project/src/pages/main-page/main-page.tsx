@@ -60,7 +60,7 @@ function GenresList() {
     <ul className='catalog__genres-list'>
       {
         genres.map((genre, index) => (
-          <li key={genre} className={`catalog__genres-item ${index === 0 ? '' : 'catalog__genres-item--active'}`}>
+          <li key={genre} className={`catalog__genres-item ${index === 0 ? 'catalog__genres-item--active' : ''}`}>
             <a href='#' className='catalog__genres-link'>{genre}</a>
           </li>)
         )

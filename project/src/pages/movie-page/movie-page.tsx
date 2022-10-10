@@ -3,6 +3,7 @@ import { Logo } from '../../components/logo/logo';
 import { UserBlock } from '../../components/user-block/user-block';
 import { IFilmsList, FilmsList } from '../../components/films-list/films-list';
 import { FilmCardDescription, IFilmCardDesc } from '../../components/film-card-description/film-card-description';
+import {useParams} from 'react-router-dom';
 
 interface IFilmInfo extends IFilmCardDesc {
   imgSrc: string;
@@ -10,7 +11,7 @@ interface IFilmInfo extends IFilmCardDesc {
 
 function PageHeader() {
   return (
-    <header className='page-header'>
+    <header className='page-header film-card__head'>
       <Logo isLight={false} />
       <UserBlock />
     </header>
@@ -108,16 +109,12 @@ function PageContent({ films }: IFilmsList) {
   );
 }
 
-interface IFilm extends IFilmsList, IFilmInfo {
-}
-
-export function Film({
-  films,
-  imgSrc,
-  title,
-  genre,
-  year
-}: IFilm) {
+export function Film({ films }: IFilmsList) {
+  const params = useParams();
+  const imgSrc = `img/bg-${params.id}.jpg`;
+  const title = 'The Grand Budapest Hotel'; //temporary The Grand Budapest Hotel data
+  const genre = 'Drama';
+  const year = '2014';
   return (
     <div>
       <PageCard imgSrc={imgSrc} title={title} genre={genre} year={year} />
