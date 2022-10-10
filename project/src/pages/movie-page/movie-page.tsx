@@ -1,8 +1,8 @@
 import { Footer } from '../../components/footer/footer';
 import { Logo } from '../../components/logo/logo';
-import { UserBlock } from '../../components/userBlock/userBlock';
-import { IFilmsList, FilmsList } from '../../components/filmsList/filmsList';
-import { FilmCardDesc, IFilmCardDesc } from '../../components/filmCardDesc/filmCardDesc';
+import { UserBlock } from '../../components/user-block/user-block';
+import { IFilmsList, FilmsList } from '../../components/films-list/films-list';
+import { FilmCardDescription, IFilmCardDesc } from '../../components/film-card-description/film-card-description';
 
 interface IFilmInfo extends IFilmCardDesc {
   imgSrc: string;
@@ -31,7 +31,7 @@ function FilmCardHero({
       <h1 className='visually-hidden'>WTW</h1>
       <PageHeader />
       <div className='film-card__wrap'>
-        <FilmCardDesc title={title} genre={genre} year={year} />
+        <FilmCardDescription title={title} genre={genre} year={year} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { Logo } from '../../components/logo/logo';
 import { Footer } from '../../components/footer/footer';
-import { UserBlock } from '../../components/userBlock/userBlock';
-import { IFilmsList, FilmsList } from '../../components/filmsList/filmsList';
+import { UserBlock } from '../../components/user-block/user-block';
+import { IFilmsList, FilmsList } from '../../components/films-list/films-list';
 
 function HeaderMyList() {
   return (

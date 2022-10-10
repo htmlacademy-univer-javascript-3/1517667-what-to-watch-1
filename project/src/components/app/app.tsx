@@ -1,5 +1,5 @@
-import { MainPage } from '../../pages/mainPage/mainPage';
-import { IFilmsList } from '../filmsList/filmsList';
+import { MainPage } from '../../pages/main-page/main-page';
+import { IFilmsList } from '../films-list/films-list';
 
 function App({films} : IFilmsList): JSX.Element {
   return <MainPage films={films}/>;

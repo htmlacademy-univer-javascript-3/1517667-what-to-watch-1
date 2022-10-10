@@ -1,5 +1,5 @@
 import { Logo } from '../../components/logo/logo';
-import { UserBlock } from '../../components/userBlock/userBlock';
+import { UserBlock } from '../../components/user-block/user-block';
 
 interface FilmInfo {
   imgSrc: string;
