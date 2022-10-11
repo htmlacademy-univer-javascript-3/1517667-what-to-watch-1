@@ -1,9 +1,9 @@
 import React from 'react';
 import { Logo } from '../../components/logo/logo';
 import { Footer } from '../../components/footer/footer';
-import { IFilmsList, FilmsList } from '../../components/filmsList/filmsList';
-import { UserBlock } from '../../components/userBlock/userBlock';
-import { FilmCardDesc, IFilmCard, IFilmCardDesc } from '../../components/filmCardDesc/filmCardDesc';
+import { IFilmsList, FilmsList } from '../../components/films-list/films-list';
+import { UserBlock } from '../../components/user-block/user-block';
+import { FilmCardDescription, IFilmCard, IFilmCardDesc } from '../../components/film-card-description/film-card-description';
 
 function Header() {
   return (
@@ -26,7 +26,7 @@ function FilmCardWrap({
           <img src='img/the-grand-budapest-hotel-poster.jpg' alt='The Grand Budapest Hotel poster' width='218' height='327' />
         </div>
 
-        <FilmCardDesc title={title} genre={genre} year={year} />
+        <FilmCardDescription title={title} genre={genre} year={year} />
       </div>
     </div>
   );
@@ -60,7 +60,7 @@ function GenresList() {
     <ul className='catalog__genres-list'>
       {
         genres.map((genre, index) => (
-          <li key={genre} className={`catalog__genres-item ${index === 0 ? '' : 'catalog__genres-item--active'}`}>
+          <li key={genre} className={`catalog__genres-item ${index === 0 ? 'catalog__genres-item--active' : ''}`}>
             <a href='#' className='catalog__genres-link'>{genre}</a>
           </li>)
         )

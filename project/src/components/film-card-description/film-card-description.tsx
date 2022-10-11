@@ -29,7 +29,7 @@ function FilmCardButtons() {
   );
 }
 
-export function FilmCardDesc({
+export function FilmCardDescription({
   title,
   genre,
   year

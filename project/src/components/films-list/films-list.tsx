@@ -1,4 +1,4 @@
-import { ISmallFilmCard, SmallFilmCard } from '../smallFilmCard/smallFilmCard';
+import { ISmallFilmCard, SmallFilmCard } from '../small-film-card/small-film-card';
 
 export interface IFilmsList {
   films: ISmallFilmCard[]
