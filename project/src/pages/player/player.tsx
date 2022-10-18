@@ -1,15 +1,21 @@
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 export function Player() {
+  const { id } = useParams();
   return (
     <div className='player'>
-      <video src='#' className='player__video' poster='img/player-poster.jpg'></video>
+      <video src='img/video.mp4' className='player__video' poster='img/player-poster.jpg'></video>
 
-      <button type='button' className='player__exit'>Exit</button>
+      <Link to={`/films/${id}`} className='small-film-card__link'>
+        <button type='button' className='player__exit'>Exit</button>
+      </Link>
 
       <div className='player__controls'>
         <div className='player__controls-row'>
           <div className='player__time'>
             <progress className='player__progress' value='30' max='100'></progress>
-            <div className='player__toggler' style={{left: '30%'}}>Toggler</div>
+            <div className='player__toggler' style={{ left: '30%' }}>Toggler</div>
           </div>
           <div className='player__time-value'>1:30:29</div>
         </div>
