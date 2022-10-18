@@ -98,11 +98,11 @@ function Rating() {
 }
 
 interface IReview {
+  value: string;
   onTyping: React.Dispatch<React.ChangeEvent<HTMLTextAreaElement>>;
 }
 
-function ReviewDiv({ onTyping }: IReview) {
-  const value = '';
+function ReviewDiv({ value, onTyping }: IReview) {
   return (
     <div className='add-review'>
       <form action='#' className='add-review__htmlForm'>
@@ -110,8 +110,8 @@ function ReviewDiv({ onTyping }: IReview) {
         <div className='add-review__text'>
           <textarea
             className='add-review__textarea'
-            name='review-text'
-            id='review-text'
+            name='review'
+            id='review'
             value={value}
             placeholder='Review text'
             onChange={onTyping}
@@ -126,21 +126,21 @@ function ReviewDiv({ onTyping }: IReview) {
   );
 }
 
-export function ReviewSection() {
+export const ReviewSection = () => {
   const { id } = useParams();
   const [review, setReview] = React.useState('');
+
   if (id === undefined) {
     return <NotFoundError />;
   }
+
   const imgSrc = `img/${id}.jpg`;
   const posterSrc = `img/${id}.jpg`;
   const posterAlt = `${id} poster`;
 
-  const updateReview = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { value } = evt.target;
-    setReview(() => value);
+  const handleReviewChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setReview(evt.target.value);
     /* eslint-disable no-console */
-    console.log(value);
     console.log(review);
     /* eslint-enable no-console */
   };
@@ -148,7 +148,10 @@ export function ReviewSection() {
   return (
     <section className='film-card film-card--full'>
       <FilmCardHeader id={id} imgSrc={imgSrc} title={id} posterSrc={posterSrc} posterAlt={posterAlt} />
-      <ReviewDiv onTyping={updateReview} />
+      <div>
+        <label htmlFor="review">My Textarea</label>
+        <ReviewDiv value={review} onTyping={handleReviewChange}/>
+      </div>
     </section>
   );
-}
+};
