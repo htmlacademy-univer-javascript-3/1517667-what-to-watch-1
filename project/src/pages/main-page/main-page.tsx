@@ -15,6 +15,7 @@ function Header() {
 }
 
 function FilmCardWrap({
+  id,
   title,
   genre,
   year
@@ -26,13 +27,14 @@ function FilmCardWrap({
           <img src='img/the-grand-budapest-hotel-poster.jpg' alt='The Grand Budapest Hotel poster' width='218' height='327' />
         </div>
 
-        <FilmCardDescription title={title} genre={genre} year={year} />
+        <FilmCardDescription id={id} title={title} genre={genre} year={year} />
       </div>
     </div>
   );
 }
 
 function FilmCard({
+  id,
   title,
   genre,
   year,
@@ -46,7 +48,7 @@ function FilmCard({
       </div>
       <h1 className='visually-hidden'>WTW</h1>
       <Header />
-      <FilmCardWrap title={title} genre={genre} year={year} />
+      <FilmCardWrap id={id} title={title} genre={genre} year={year} />
     </section>
   );
 }
@@ -94,7 +96,7 @@ function PageContent({films} : IFilmsList) {
 export function MainPage({films} : IFilmsList) {
   return (
     <div>
-      <FilmCard title='The Grand Budapest Hotel' genre='Drama' year='2014' posterSrc='img/bg-the-grand-budapest-hotel.jpg' posterAlt='The Grand Budapest Hotel' />
+      <FilmCard id='the-grand-budapest-hotel' title='The Grand Budapest Hotel' genre='Drama' year='2014' posterSrc='img/bg-the-grand-budapest-hotel.jpg' posterAlt='The Grand Budapest Hotel' />
       <PageContent films={films}/>
     </div>
   );

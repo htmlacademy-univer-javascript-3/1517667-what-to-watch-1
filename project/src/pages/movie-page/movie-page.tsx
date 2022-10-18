@@ -1,12 +1,31 @@
+import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { Footer } from '../../components/footer/footer';
 import { Logo } from '../../components/logo/logo';
 import { UserBlock } from '../../components/user-block/user-block';
 import { IFilmsList, FilmsList } from '../../components/films-list/films-list';
+import { ISmallFilmCardInfo } from '../../components/small-film-card/small-film-card';
 import { FilmCardDescription, IFilmCardDesc } from '../../components/film-card-description/film-card-description';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-interface IFilmInfo extends IFilmCardDesc {
-  imgSrc: string;
+interface IFilmDescription {
+  image: string;
+  director: string;
+  actors: string;
+  description: string[];
+  ratingScore: string;
+  ratingLevel: string;
+  ratingsCount: string;
+}
+
+export interface IFullDescription extends IFilmDescription {
+  title: string;
+  genre: string;
+  year: string;
+}
+
+interface IFilm {
+  filmsToShow: { [id: string]: IFullDescription };
+  otherFilms: ISmallFilmCardInfo[];
 }
 
 function PageHeader() {
@@ -19,31 +38,31 @@ function PageHeader() {
 }
 
 function FilmCardHero({
-  imgSrc,
+  id,
   title,
   genre,
   year
-}: IFilmInfo) {
+}: IFilmCardDesc) {
   return (
     <div className='film-card__hero'>
       <div className='film-card__bg'>
-        <img src={imgSrc} alt={title} />
+        <img src='img/bg-the-grand-budapest-hotel.jpg' alt={title} />
       </div>
       <h1 className='visually-hidden'>WTW</h1>
       <PageHeader />
       <div className='film-card__wrap'>
-        <FilmCardDescription title={title} genre={genre} year={year} />
+        <FilmCardDescription id={id} title={title} genre={genre} year={year} />
       </div>
     </div>
   );
 }
 
-function FilmCardWrap() {
+function FilmCardWrap({ ratingScore, ratingLevel, ratingsCount, image, director, actors, description }: IFilmDescription) {
   return (
     <div className='film-card__wrap film-card__translate-top'>
       <div className='film-card__info'>
         <div className='film-card__poster film-card__poster--big'>
-          <img src='img/the-grand-budapest-hotel-poster.jpg' alt='The Grand Budapest Hotel poster' width='218' height='327' />
+          <img src={image} alt='The Grand Budapest Hotel poster' width='218' height='327' />
         </div>
         <div className='film-card__desc'>
           <nav className='film-nav film-card__nav'>
@@ -61,42 +80,25 @@ function FilmCardWrap() {
           </nav>
 
           <div className='film-rating'>
-            <div className='film-rating__score'>8,9</div>
+            <div className='film-rating__score'>{ratingScore}</div>
             <p className='film-rating__meta'>
-              <span className='film-rating__level'>Very good</span>
-              <span className='film-rating__count'>240 ratings</span>
+              <span className='film-rating__level'>{ratingLevel}</span>
+              <span className='film-rating__count'>{ratingsCount}</span>
             </p>
           </div>
 
           <div className='film-card__text'>
-            <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s friend and protege.</p>
+            {description.map((item) => <p key={item}>{item}</p>)}
 
-            <p>Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave&apos;s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
+            <p className='film-card__director'><strong>Director: {director}</strong></p>
 
-            <p className='film-card__director'><strong>Director: Wes Anderson</strong></p>
-
-            <p className='film-card__starring'><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other</strong></p>
+            <p className='film-card__starring'><strong>Starring: {actors} and other</strong></p>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-function PageCard({
-  imgSrc,
-  title,
-  genre,
-  year
-}: IFilmInfo) {
-  return (
-    <section className='film-card film-card--full'>
-      <FilmCardHero imgSrc={imgSrc} title={title} genre={genre} year={year} />
-      <FilmCardWrap />
-    </section>
-  );
-}
-
 function PageContent({ films }: IFilmsList) {
   return (
     <div className='page-content'>
@@ -109,16 +111,24 @@ function PageContent({ films }: IFilmsList) {
   );
 }
 
-export function Film({ films }: IFilmsList) {
-  const params = useParams();
-  const imgSrc = `img/bg-${params.id}.jpg`;
-  const title = 'The Grand Budapest Hotel'; //temporary The Grand Budapest Hotel data
-  const genre = 'Drama';
-  const year = '2014';
+export function Film({
+  filmsToShow,
+  otherFilms }: IFilm) {
+  const { id } = useParams();
+  if (id === undefined) {
+    return <NotFoundError />;
+  }
+  const film = filmsToShow[id];
+  if (film === undefined) {
+    return <NotFoundError />;
+  }
   return (
     <div>
-      <PageCard imgSrc={imgSrc} title={title} genre={genre} year={year} />
-      <PageContent films={films} />
+      <section className='film-card film-card--full'>
+        <FilmCardHero id={id} title={film.title} genre={film.genre} year={film.year} />
+        <FilmCardWrap {...film} />
+      </section>
+      <PageContent films={otherFilms} />
     </div>
   );
 }

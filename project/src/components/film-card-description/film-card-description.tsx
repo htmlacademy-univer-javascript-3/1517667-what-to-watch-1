@@ -1,4 +1,11 @@
+import { Link } from 'react-router-dom';
+
+interface IFilmId {
+  id: string;
+}
+
 export interface IFilmCardDesc {
+  id: string;
   title: string;
   genre: string;
   year: string;
@@ -9,15 +16,19 @@ export interface IFilmCard extends IFilmCardDesc {
   posterAlt: string;
 }
 
-function FilmCardButtons() {
+function FilmCardButtons({ id }: IFilmId) {
   return (
     <div className='film-card__buttons'>
+
       <button className='btn btn--play film-card__button' type='button'>
-        <svg viewBox='0 0 19 19' width='19' height='19'>
-          <use xlinkHref='#play-s'></use>
-        </svg>
+        <Link to={`/player/${id}`}>
+          <svg viewBox='0 0 19 19' width='19' height='19'>
+            <use xlinkHref='#play-s'></use>
+          </svg>
+        </Link>
         <span>Play</span>
       </button>
+
       <button className='btn btn--list film-card__button' type='button'>
         <svg viewBox='0 0 19 20' width='19' height='20'>
           <use xlinkHref='#add'></use>
@@ -25,11 +36,14 @@ function FilmCardButtons() {
         <span>My list</span>
         <span className='film-card__count'>9</span>
       </button>
+
+      <Link to={`/addreview/${id}`} className="btn film-card__button">Add review</Link>
     </div>
   );
 }
 
 export function FilmCardDescription({
+  id,
   title,
   genre,
   year
@@ -42,7 +56,7 @@ export function FilmCardDescription({
         <span className='film-card__year'>{year}</span>
       </p>
 
-      <FilmCardButtons />
+      <FilmCardButtons id={id} />
     </div>
   );
 }

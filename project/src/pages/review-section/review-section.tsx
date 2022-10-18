@@ -1,28 +1,31 @@
+import React from 'react';
 import { Logo } from '../../components/logo/logo';
 import { UserBlock } from '../../components/user-block/user-block';
 import { useParams } from 'react-router-dom';
+import { NotFoundError } from '../../pages/not-found-error/not-found-error';
+import { Link } from 'react-router-dom';
 
 interface FilmInfo {
+  id: string;
   imgSrc: string;
   title: string;
-  filmPage: string;
   posterSrc: string;
   posterAlt: string;
 }
 
 interface FilmPageInfo {
   title: string;
-  filmPage: string;
+  id: string;
 }
 
-function PageHeader({ filmPage, title }: FilmPageInfo) {
+function PageHeader({ id, title }: FilmPageInfo) {
   return (
     <header className='page-header'>
       <Logo isLight={false} />
       <nav className='breadcrumbs'>
         <ul className='breadcrumbs__list'>
           <li className='breadcrumbs__item'>
-            <a href={filmPage} className='breadcrumbs__link'>{title}</a>
+            <Link to={`/film/${id}`} className='breadcrumbs__link'>{title}</Link>
           </li>
           <li className='breadcrumbs__item'>
             <a className='breadcrumbs__link'>Add review</a>
@@ -36,9 +39,9 @@ function PageHeader({ filmPage, title }: FilmPageInfo) {
 }
 
 function FilmCardHeader({
+  id,
   imgSrc,
   title,
-  filmPage,
   posterSrc,
   posterAlt
 }: FilmInfo) {
@@ -48,7 +51,7 @@ function FilmCardHeader({
         <img src={imgSrc} alt={title} />
       </div>
       <h1 className='visually-hidden'>WTW</h1>
-      <PageHeader filmPage={filmPage} title={title} />
+      <PageHeader id={id} title={title} />
       <div className='film-card__poster film-card__poster--small'>
         <img src={posterSrc} alt={posterAlt} width='218' height='327' />
       </div>
@@ -94,39 +97,58 @@ function Rating() {
   );
 }
 
-function AddReviewText() {
-  return (
-    <div className='add-review__text'>
-      <textarea className='add-review__textarea' name='review-text' id='review-text' placeholder='Review text'></textarea>
-      <div className='add-review__submit'>
-        <button className='add-review__btn' type='submit'>Post</button>
-      </div>
-    </div>
-  );
+interface IReview {
+  onTyping: React.Dispatch<React.ChangeEvent<HTMLTextAreaElement>>;
 }
 
-function ReviewDiv() {
+function ReviewDiv({ onTyping }: IReview) {
+  const value = '';
   return (
     <div className='add-review'>
       <form action='#' className='add-review__htmlForm'>
         <Rating />
-        <AddReviewText />
+        <div className='add-review__text'>
+          <textarea
+            className='add-review__textarea'
+            name='review-text'
+            id='review-text'
+            value={value}
+            placeholder='Review text'
+            onChange={onTyping}
+          >
+          </textarea>
+          <div className='add-review__submit'>
+            <button className='add-review__btn' type='submit'>Post</button>
+          </div>
+        </div>
       </form>
     </div>
   );
 }
 
 export function ReviewSection() {
-  const params = useParams();
-  const imgSrc = `img/${params.id}.jpg`;
-  const title = 'The Grand Budapest Hotel'; //temporary The Grand Budapest Hotel data
-  const filmPage = '#';
-  const posterSrc = 'img/the-grand-budapest-hotel-poster.jpg';
-  const posterAlt = 'The Grand Budapest Hotel poster';
+  const { id } = useParams();
+  const [review, setReview] = React.useState('');
+  if (id === undefined) {
+    return <NotFoundError />;
+  }
+  const imgSrc = `img/${id}.jpg`;
+  const posterSrc = `img/${id}.jpg`;
+  const posterAlt = `${id} poster`;
+
+  const updateReview = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = evt.target;
+    setReview(() => value);
+    /* eslint-disable no-console */
+    console.log(value);
+    console.log(review);
+    /* eslint-enable no-console */
+  };
+
   return (
     <section className='film-card film-card--full'>
-      <FilmCardHeader imgSrc={imgSrc} title={title} filmPage={filmPage} posterSrc={posterSrc} posterAlt={posterAlt} />
-      <ReviewDiv />
+      <FilmCardHeader id={id} imgSrc={imgSrc} title={id} posterSrc={posterSrc} posterAlt={posterAlt} />
+      <ReviewDiv onTyping={updateReview} />
     </section>
   );
 }
