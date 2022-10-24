@@ -27,6 +27,7 @@ export function FilmsList({ films }: IFilmsList) {
           <SmallFilmCard
             key={`${x.id}-${index - 1}`}
             imgSrc={x.imgSrc}
+            videoPreviewSrc={x.videoPreviewSrc}
             title={x.title}
             id={x.id}
             onHover={makeElementActive}
