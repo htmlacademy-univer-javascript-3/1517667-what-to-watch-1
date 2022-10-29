@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 export interface IVideoPlayer {
   videoSrc: string;
@@ -11,17 +11,12 @@ export function VideoPlayer({
 }: IVideoPlayer) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const play = () => {
-    if (videoRef.current !== null) {
-      setTimeout(() => {videoRef.current?.play();}, 1000);
-    }
-  };
+  useEffect(() => {
+    videoRef.current?.load();
+    videoRef.current?.play();
+    return () => videoRef.current?.pause();
+  });
 
-  const pause = () => {
-    if (videoRef.current !== null) {
-      videoRef.current.load();
-    }
-  };
   return (
     <video
       className='small-film-card__image'
@@ -29,11 +24,8 @@ export function VideoPlayer({
       muted
       src={videoSrc}
       poster={posterSrc}
-      onMouseEnter={() => { play(); }}
-      onMouseLeave={() => { pause(); }}
     >
       <source src={videoSrc} type="video/mp4" />
     </video>
   );
-  /* eslint-enable no-console */
 }
