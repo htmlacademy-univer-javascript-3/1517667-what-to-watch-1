@@ -16,7 +16,7 @@ export function VideoPlayer({
     videoRef.current?.play();
     return () => videoRef.current?.pause();
   });
-  
+
   return (
     <video
       className='small-film-card__image'
@@ -24,11 +24,8 @@ export function VideoPlayer({
       muted
       src={videoSrc}
       poster={posterSrc}
-      // onMouseEnter={() => { play(); }}
-      // onMouseLeave={() => { pause(); }}
     >
       <source src={videoSrc} type="video/mp4" />
     </video>
   );
-  /* eslint-enable no-console */
 }
