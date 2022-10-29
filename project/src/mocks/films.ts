@@ -1,5 +1,4 @@
 import { IFullDescription } from '../pages/movie-page/movie-page';
-import { IReview } from '../components/tabs/tabs';
 
 
 export const filmDescriptions: { [id: string]: IFullDescription } = {
