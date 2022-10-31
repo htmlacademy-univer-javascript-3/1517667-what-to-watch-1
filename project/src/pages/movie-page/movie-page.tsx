@@ -2,8 +2,8 @@ import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { Footer } from '../../components/footer/footer';
 import { Logo } from '../../components/logo/logo';
 import { UserBlock } from '../../components/user-block/user-block';
-import { IFilmsList, FilmsList } from '../../components/films-list/films-list';
-import { ISmallFilmCardInfo } from '../../components/small-film-card/small-film-card';
+import { IGenredFilmsInfo } from '../../components/genres-list/genres-list';
+import { FilmsList } from '../../components/films-list/films-list';
 import { FilmCardDescription, IFilmCardDesc } from '../../components/film-card-description/film-card-description';
 import { Tabs, IFilmDescription } from '../../components/tabs/tabs';
 import { useParams } from 'react-router-dom';
@@ -14,9 +14,8 @@ export interface IFullDescription extends IFilmDescription {
   imageAlt: string;
 }
 
-interface IFilm {
+interface IFilm extends IGenredFilmsInfo {
   filmsToShow: { [id: string]: IFullDescription };
-  otherFilms: ISmallFilmCardInfo[];
 }
 
 function PageHeader() {
@@ -60,7 +59,7 @@ function FilmCardWrap(filmDesc: IFullDescription) {
     </div>
   );
 }
-function PageContent({ films }: IFilmsList) {
+function PageContent({ films }: IGenredFilmsInfo) {
   return (
     <div className='page-content'>
       <section className='catalog catalog--like-this'>
@@ -74,7 +73,7 @@ function PageContent({ films }: IFilmsList) {
 
 export function Film({
   filmsToShow,
-  otherFilms }: IFilm) {
+  films }: IFilm) {
   const { id } = useParams();
   if (id === undefined) {
     return <NotFoundError />;
@@ -89,7 +88,7 @@ export function Film({
         <FilmCardHero id={id} title={film.title} genre={film.genre} year={film.year} />
         <FilmCardWrap {...film} />
       </section>
-      <PageContent films={otherFilms} />
+      <PageContent films={films} />
     </div>
   );
 }
