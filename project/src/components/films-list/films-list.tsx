@@ -5,7 +5,7 @@ export interface IFilmsList {
   films: ISmallFilmCardInfo[]
 }
 
-export function FilmsList({ films }: IFilmsList) {
+export function FilmsList({films} : IFilmsList) {
   const [activeId, setActiveId] = React.useState('');
 
   const makeElementActive = (id: string) => {

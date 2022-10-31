@@ -1,8 +1,11 @@
-import React from 'react';
 import { Logo } from '../../components/logo/logo';
 import { Footer } from '../../components/footer/footer';
-import { IFilmsList, FilmsList } from '../../components/films-list/films-list';
+import { IGenredFilmsInfo } from '../../components/genres-list/genres-list';
 import { UserBlock } from '../../components/user-block/user-block';
+import { GenresList } from '../../components/genres-list/genres-list';
+import { FilmsList } from '../../components/films-list/films-list';
+import { useSelector } from 'react-redux';
+import { IState } from '../../reducer';
 import { FilmCardDescription, IFilmCard, IFilmCardDesc } from '../../components/film-card-description/film-card-description';
 
 function Header() {
@@ -53,30 +56,13 @@ function FilmCard({
   );
 }
 
-function GenresList() {
-  const genres = [
-    'All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror',
-    'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'
-  ];
-  return (
-    <ul className='catalog__genres-list'>
-      {
-        genres.map((genre, index) => (
-          <li key={genre} className={`catalog__genres-item ${index === 0 ? 'catalog__genres-item--active' : ''}`}>
-            <a href='#' className='catalog__genres-link'>{genre}</a>
-          </li>)
-        )
-      }
-    </ul>
-  );
-}
-
-function Catalog({films} : IFilmsList) {
+function Catalog({films} : IGenredFilmsInfo) {
+  const genredFilms = useSelector((state: IState) => state.films);
   return (
     <section className='catalog'>
       <h2 className='catalog__title visually-hidden'>Catalog</h2>
-      <GenresList />
-      <FilmsList films={films}/>
+      <GenresList films={films}/>
+      <FilmsList films={genredFilms}/>
       <div className='catalog__more'>
         <button className='catalog__button' type='button'>Show more</button>
       </div>
@@ -84,7 +70,7 @@ function Catalog({films} : IFilmsList) {
   );
 }
 
-function PageContent({films} : IFilmsList) {
+function PageContent({films} : IGenredFilmsInfo) {
   return (
     <div className='page-content'>
       <Catalog films={films}/>
@@ -93,7 +79,7 @@ function PageContent({films} : IFilmsList) {
   );
 }
 
-export function MainPage({films} : IFilmsList) {
+export function MainPage({films} : IGenredFilmsInfo) {
   return (
     <div>
       <FilmCard id='the-grand-budapest-hotel' title='The Grand Budapest Hotel' genre='Drama' year='2014' posterSrc='img/bg-the-grand-budapest-hotel.jpg' posterAlt='The Grand Budapest Hotel' />
