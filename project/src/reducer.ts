@@ -42,7 +42,7 @@ export const updateStore = createReducer(preloadedState, (builder) => {
     .addCase('NEXT_PAGE', (state: IState, action: Action) => {
       if (!state.isLastPage) {
         const genreFilms = getFilmsOfGenre(state.genre);
-        state.films.push.apply(state.films, genreFilms.slice(state.page * PAGE_SIZE, (state.page + 1) * PAGE_SIZE));
+        state.films = [...state.films, ...genreFilms.slice(state.page * PAGE_SIZE, (state.page + 1) * PAGE_SIZE)];
         state.page += 1;
         state.isLastPage = genreFilms.length <= (state.page * PAGE_SIZE);
       }
