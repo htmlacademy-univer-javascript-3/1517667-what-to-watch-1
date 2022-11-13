@@ -63,9 +63,6 @@ function Catalog({films} : IGenredFilmsInfo) {
       <h2 className='catalog__title visually-hidden'>Catalog</h2>
       <GenresList films={films}/>
       <FilmsList films={genredFilms}/>
-      <div className='catalog__more'>
-        <button className='catalog__button' type='button'>Show more</button>
-      </div>
     </section>
   );
 }
