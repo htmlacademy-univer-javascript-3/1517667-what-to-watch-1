@@ -140,9 +140,6 @@ export const ReviewSection = () => {
 
   const handleReviewChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReview(evt.target.value);
-    /* eslint-disable no-console */
-    console.log(review);
-    /* eslint-enable no-console */
   };
 
   return (
