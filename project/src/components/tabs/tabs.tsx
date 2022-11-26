@@ -1,4 +1,6 @@
 import React from 'react';
+import { IFilmInfo, IFilm } from '../../types/IFilmInfo';
+import { IComment } from '../../types/IComment';
 
 export interface ITabs {
   filmId: string;
@@ -7,7 +9,7 @@ export interface ITabs {
 interface ITab {
   id: number;
   title: string;
-  child: (x: IFilmDescription) => JSX.Element;
+  child: (x: IFilmInfo) => JSX.Element;
 }
 
 export interface IReview {
@@ -18,53 +20,40 @@ export interface IReview {
   rating: string;
 }
 
-export interface IFilmDescription {
-  director: string;
-  actors: string[];
-  description: string[];
-  ratingScore: string;
-  ratingLevel: string;
-  ratingsCount: string;
-  time: string;
-  genre: string;
-  year: string;
-  reviews: IReview[];
-}
-
-function OverviewTab(desc: IFilmDescription) {
+function OverviewTab(film: IFilmInfo) {
   return (
     <div>
       <div className='film-rating'>
-        <div className='film-rating__score'>{desc.ratingScore}</div>
+        <div className='film-rating__score'>{film.rating}</div>
         <p className='film-rating__meta'>
-          <span className='film-rating__level'>{desc.ratingLevel}</span>
-          <span className='film-rating__count'>{desc.ratingsCount}</span>
+          <span className='film-rating__level'>{film.rating}</span>
+          <span className='film-rating__count'>{film.scoresCount}</span>
         </p>
       </div>
 
       <div className='film-card__text'>
-        {desc.description.map((item) => <p key={item}>{item}</p>)}
+        <p>{film.description}</p>
 
-        <p className='film-card__director'><strong>Director: {desc.director}</strong></p>
+        <p className='film-card__director'><strong>Director: {film.director}</strong></p>
 
-        <p className='film-card__starring'><strong>Starring: {desc.actors.join(', ')} and other</strong></p>
+        <p className='film-card__starring'><strong>Starring: {film.starring.join(', ')} and other</strong></p>
       </div>
     </div>
   );
 }
 
-function DetailsTab(desc: IFilmDescription) {
+function DetailsTab(film: IFilmInfo) {
   return (
     <div className='film-card__text film-card__row'>
       <div className='film-card__text-col'>
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Director</strong>
-          <span className='film-card__details-value'>{desc.director}</span>
+          <span className='film-card__details-value'>{film.director}</span>
         </p>
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Starring</strong>
           <span className='film-card__details-value'>
-            {desc.actors.map((item) => <p key={item}>{item}</p>)}
+            {film.starring.map((item) => <p key={item}>{item}</p>)}
           </span>
         </p>
       </div>
@@ -72,50 +61,50 @@ function DetailsTab(desc: IFilmDescription) {
       <div className='film-card__text-col'>
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Run Time</strong>
-          <span className='film-card__details-value'>{desc.time}</span>
+          <span className='film-card__details-value'>{film.runTime}</span>
         </p>
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Genre</strong>
-          <span className='film-card__details-value'>{desc.genre}</span>
+          <span className='film-card__details-value'>{film.genre}</span>
         </p>
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Released</strong>
-          <span className='film-card__details-value'>{desc.year}</span>
+          <span className='film-card__details-value'>{film.released}</span>
         </p>
       </div>
     </div>
   );
 }
 
-function SingleReviewBlock(data: IReview) {
+function SingleReviewBlock(comment: IComment) {
   return (
     <div className='review'>
       <blockquote className='review__quote'>
-        <p className='review__text'>{data.text}</p>
+        <p className='review__text'>{comment.comment}</p>
 
         <footer className='review__details'>
-          <cite className='review__author'>{data.author}</cite>
-          <time className='review__date' dateTime={data.datetime}>{data.dateString}</time>
+          <cite className='review__author'>{comment.user.name}</cite>
+          <time className='review__date' dateTime={comment.date}>{comment.date}</time>
         </footer>
       </blockquote>
 
-      <div className='review__rating'>{data.rating}</div>
+      <div className='review__rating'>{comment.rating}</div>
     </div>
   );
 }
 
-function ReviewsColumn(reviews: IReview[]) {
+function ReviewsColumn(comments: IComment[]) {
   return (
     <div className='film-card__reviews-col'>
-      {reviews.map((r) => (<SingleReviewBlock key={`${r.datetime}-${r.author}-${r.rating}`} {...r} />))}
+      {comments.map((c) => (<SingleReviewBlock key={`${c.date}-${c.user.id}-${c.rating}`} {...c} />))}
     </div>
   );
 }
 
-function ReviewsTab(desc: IFilmDescription) {
-  const middle = Math.round(desc.reviews.length / 2);
-  const firstColumn = desc.reviews.splice(0, middle) as IReview[];
-  const secondColumn = desc.reviews.splice(middle);
+function ReviewsTab(comments: IComment[]) {
+  const middle = Math.round(comments.length / 2);
+  const firstColumn = comments.splice(0, middle);
+  const secondColumn = comments.splice(middle);
   return (
     <div className='film-card__reviews film-card__row'>
       <ReviewsColumn {...firstColumn} />
@@ -151,7 +140,7 @@ function TabHeader({ title, onItemClicked }: ITabHeader) {
   return <a className='film-nav__link' onClick={() => onItemClicked()}>{title}</a>;
 }
 
-export function Tabs(desc: IFilmDescription) {
+export function Tabs({film} : IFilm) {
   const [activeTab, setActiveTab] = React.useState(0);
 
   return (
@@ -171,7 +160,7 @@ export function Tabs(desc: IFilmDescription) {
         </ul>
       </nav>
 
-      {tabs.map((x) => (x.child(desc)))[activeTab]}
+      {tabs.map((x) => (x.child(film)))[activeTab]}
     </div>
   );
 }

@@ -9,8 +9,8 @@ export function Logo({ isLight }: ILogo) {
       <a href='main.html' className={classes}>
         {
           [
-            'W', 'T', 'W'
-          ].map((letter, index) => <span key={letter} className={`logo__letter logo__letter--${index + 1}`}>{letter}</span>)
+            ['W', 1], ['T', 2], ['W', 3]
+          ].map((pair, index) => <span key={pair[1]} className={`logo__letter logo__letter--${pair[1]}`}>{pair[0]}</span>)
         }
       </a>
     </div>

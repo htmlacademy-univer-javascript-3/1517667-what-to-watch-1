@@ -4,34 +4,36 @@ import { MyList } from '../../pages/my-list/my-list';
 import { Film } from '../../pages/movie-page/movie-page';
 import { ReviewSection } from '../../pages/review-section/review-section';
 import { Player } from '../../pages/player/player';
-import { IGenredCardFilm } from '../../mocks/films-lists';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { AuthorizationStatus, PrivateRoute } from '../private-route/private-route';
-import { filmDescriptions } from '../../mocks/films';
 import {
   BrowserRouter,
   Routes,
   Route
 } from 'react-router-dom';
+import { Spinner } from '../spinner/spinner';
+import { IState } from '../../reducer';
+import { useAppSelector } from '../../hooks';
 
-interface IApp {
-  allFilms: IGenredCardFilm[];
-  userFilms: IGenredCardFilm[];
-}
+function App(): JSX.Element {
+  const { isDataLoaded } = useAppSelector((state: IState) => state);
 
-function App({ allFilms, userFilms }: IApp): JSX.Element {
+  if (!isDataLoaded) {
+    return <Spinner />;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage films={allFilms}/>} />
+        <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/mylist" element={
           <PrivateRoute authStatus={AuthorizationStatus.NoAuth}>
-            <MyList films={userFilms} />
+            <MyList />
           </PrivateRoute>
         }
         />
-        <Route path="/films/:id" element={<Film filmsToShow={filmDescriptions} films={allFilms} />} />
+        <Route path="/films/:id" element={<Film />} />
         <Route path="/films/:id/review" element={<ReviewSection />} />
         <Route path="/player/:id" element={<Player />} />
         <Route path="/addreview/:id" element={<ReviewSection />} />

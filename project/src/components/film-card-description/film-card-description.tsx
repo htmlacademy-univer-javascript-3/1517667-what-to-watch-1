@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
+import { IFilm } from '../../types/IFilmInfo';
 
 interface IFilmId {
-  id: string;
+  id: number;
 }
 
 export interface IFilmCardDesc {
   id: string;
-  title: string;
+  name: string;
   genre: string;
-  year: string;
+  released: number;
 }
 
 export interface IFilmCard extends IFilmCardDesc {
@@ -42,21 +43,16 @@ function FilmCardButtons({ id }: IFilmId) {
   );
 }
 
-export function FilmCardDescription({
-  id,
-  title,
-  genre,
-  year
-}: IFilmCardDesc) {
+export function FilmCardDescription({film} : IFilm) {
   return (
     <div className='film-card__desc'>
-      <h2 className='film-card__title'>{title}</h2>
+      <h2 className='film-card__title'>{film.name}</h2>
       <p className='film-card__meta'>
-        <span className='film-card__genre'>{genre}</span>
-        <span className='film-card__year'>{year}</span>
+        <span className='film-card__genre'>{film.genre}</span>
+        <span className='film-card__year'>{film.released}</span>
       </p>
 
-      <FilmCardButtons id={id} />
+      <FilmCardButtons id={film.id} />
     </div>
   );
 }
