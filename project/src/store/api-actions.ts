@@ -7,7 +7,11 @@ import {
   setPromoFilmAction,
   setErrorAction,
   requireAuthorization,
-  redirectToRoute
+  redirectToRoute,
+  setCurrentFilmAction,
+  setCurrentFilmReviewsAction,
+  updateReviewsFilmIdAction,
+  setSimilarFilmsAction
 } from '../action';
 import { AuthorizationStatus } from '../components/private-route/private-route';
 import { saveToken, dropToken } from './token';
@@ -15,6 +19,8 @@ import { store } from '.';
 import { UserData } from '../types/UserData';
 import { AuthData } from '../types/AuthData';
 import { IState } from '../reducer';
+import { IComment } from '../types/IComment';
+import { ISendComment } from '../types/ISendComment';
 
 export type AppDispatch = typeof store.dispatch;
 
@@ -90,5 +96,65 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     dispatch(redirectToRoute('/'));
+  },
+);
+
+export const fetchFilmAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch,
+  state: IState,
+  extra: AxiosInstance
+}>(
+  'FETCH_CURRENT_FILM',
+  async (id, { dispatch, extra: api }) => {
+    dispatch(setLoadedStatusAction(false));
+
+    try {
+      const filmResponse = await api.get<IFilmInfo>(`/films/${id}`);
+      const similarResponse = await api.get<IFilmInfo[]>(`/films/${id}/similar`);
+      dispatch(setCurrentFilmAction(filmResponse.data));
+      dispatch(setSimilarFilmsAction(similarResponse.data));
+    }
+    catch {
+      dispatch(redirectToRoute('/*'));
+    }
+
+    dispatch(setLoadedStatusAction(true));
+  },
+);
+
+export const fetchReviewsAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatch,
+  state: IState,
+  extra: AxiosInstance
+}>(
+  'FETCH_FILM_REVIEWS',
+  async (id, { dispatch, extra: api }) => {
+    dispatch(setLoadedStatusAction(false));
+
+    try {
+      const response = await api.get<IComment[]>(`/comments/${id}`);
+      dispatch(setCurrentFilmReviewsAction(response.data));
+      dispatch(updateReviewsFilmIdAction(id));
+    }
+    catch {
+      dispatch(redirectToRoute('/*'));
+    }
+
+    dispatch(setLoadedStatusAction(true));
+  },
+);
+
+export const addReviewAction = createAsyncThunk<void, ISendComment, {
+  dispatch: AppDispatch,
+  state: IState,
+  extra: AxiosInstance
+}>(
+  'ADD_REVIEW',
+  async (data, { dispatch, extra: api }) => {
+    api.post(`/comments/${data.filmId}`, {
+      comment: data.comment,
+      rating: data.rating
+    })
+      .catch((error) => dispatch(setErrorAction(error)));
   },
 );

@@ -24,6 +24,8 @@ export function VideoPlayer({
       muted
       src={videoSrc}
       poster={posterSrc}
+      width='280'
+      height='175'
     >
       <source src={videoSrc} type="video/mp4" />
     </video>

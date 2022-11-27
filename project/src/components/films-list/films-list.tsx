@@ -6,17 +6,17 @@ import { useAppSelector } from '../../hooks';
 import { IFilms } from '../../types/IFilmInfo';
 
 export function FilmsList({ films }: IFilms) {
-  const [activeId, setActiveId] = React.useState('');
+  const [activeId, setActiveId] = React.useState(0);
   const { isLastPage } = useAppSelector((state) => state);
 
-  const makeElementActive = (id: string) => {
+  const makeElementActive = (id: number) => {
     if (id !== activeId) {
       setActiveId(() => id);
     }
   };
 
   const clearActiveElement = () => {
-    setActiveId(() => '');
+    setActiveId(() => 0);
   };
 
   return (
@@ -26,10 +26,7 @@ export function FilmsList({ films }: IFilms) {
           films.map((x, index) => (
             <SmallFilmCard
               key={`${x.id}-${index - 1}`}
-              imgSrc={x.posterImage}
-              videoPreviewSrc={x.previewVideoLink}
-              title={x.name}
-              id={x.name}
+              film={x}
               onHover={makeElementActive}
               onMouseLeave={clearActiveElement}
             />)

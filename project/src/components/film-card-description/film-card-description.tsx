@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { IFilm } from '../../types/IFilmInfo';
+import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../private-route/private-route';
 
 interface IFilmId {
   id: number;
@@ -18,6 +20,8 @@ export interface IFilmCard extends IFilmCardDesc {
 }
 
 function FilmCardButtons({ id }: IFilmId) {
+  const { authorizationStatus } = useAppSelector((state) => state);
+
   return (
     <div className='film-card__buttons'>
 
@@ -38,7 +42,11 @@ function FilmCardButtons({ id }: IFilmId) {
         <span className='film-card__count'>9</span>
       </button>
 
-      <Link to={`/addreview/${id}`} className="btn film-card__button">Add review</Link>
+      {
+        authorizationStatus === AuthorizationStatus.Auth && (
+          <Link to={`/addreview/${id}`} className="btn film-card__button">Add review</Link>
+        )
+      }
     </div>
   );
 }

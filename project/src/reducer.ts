@@ -7,10 +7,15 @@ import {
   initAllFilmsAction,
   setPromoFilmAction,
   setErrorAction,
-  requireAuthorization
+  requireAuthorization,
+  setCurrentFilmAction,
+  setCurrentFilmReviewsAction,
+  updateReviewsFilmIdAction,
+  setSimilarFilmsAction
 } from './action';
 import { AuthorizationStatus } from './components/private-route/private-route';
 import { IFilmInfo } from './types/IFilmInfo';
+import { IComment } from './types/IComment';
 
 const PAGE_SIZE = 8;
 
@@ -26,20 +31,28 @@ export interface IState {
   authorizationStatus: AuthorizationStatus;
   isDataLoaded: boolean;
   error: string | null;
+  currentFilm: IFilmInfo | undefined;
+  similarFilms: IFilmInfo[] | undefined;
+  reviewsFilmId: number | undefined;
+  reviews: IComment[];
 }
 
 export const preloadedState = {
-  allFilms: [] as IFilmInfo[],
+  allFilms: [],
   genresList: ['All genres'],
   genreToFilms: {},
   promo: null,
   currentGenre: 'All genres',
-  pageFilms: [] as IFilmInfo[],
+  pageFilms: [],
   page: 1,
   isLastPage: false,
   authorizationStatus: AuthorizationStatus.NoAuth,
   isDataLoaded: false,
-  error: null
+  error: null,
+  currentFilm: undefined,
+  similarFilms: undefined,
+  reviewsFilmId: undefined,
+  reviews: []
 } as IState;
 
 export interface ActionWithPayload<T> extends Action {
@@ -96,5 +109,17 @@ export const updateStore = createReducer(preloadedState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setCurrentFilmAction, (state, action) => {
+      state.currentFilm = action.payload;
+    })
+    .addCase(setCurrentFilmReviewsAction, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(updateReviewsFilmIdAction, (state, action) => {
+      state.reviewsFilmId = action.payload;
+    })
+    .addCase(setSimilarFilmsAction, (state, action) => {
+      state.similarFilms = action.payload;
     });
 });
