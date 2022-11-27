@@ -1,24 +1,16 @@
 import { Link } from 'react-router-dom';
 import { VideoPlayer } from '../video-player/video-player';
 import { useState } from 'react';
+import { IFilmInfo } from '../../types/IFilmInfo';
 
-export interface ISmallFilmCardInfo {
-  id: string;
-  imgSrc: string;
-  videoPreviewSrc: string;
-  title: string;
-}
-
-interface ISmallFilmCard extends ISmallFilmCardInfo {
-  onHover: (id: string) => void;
+interface ISmallFilmCard {
+  film: IFilmInfo;
+  onHover: (id: number) => void;
   onMouseLeave: () => void;
 }
 
 export function SmallFilmCard({
-  id,
-  imgSrc,
-  videoPreviewSrc,
-  title,
+  film,
   onHover,
   onMouseLeave
 }: ISmallFilmCard) {
@@ -26,7 +18,7 @@ export function SmallFilmCard({
   let timeout: NodeJS.Timeout | undefined = undefined;
 
   const mouseEnter = () => {
-    onHover(id);
+    onHover(film.id);
     timeout = setTimeout(() => setHover(true), 1000);
   };
   const mouseLeave = () => {
@@ -36,9 +28,11 @@ export function SmallFilmCard({
   };
   return (
     <article className='small-film-card catalog__films-card' onMouseEnter={mouseEnter} onMouseLeave={mouseLeave}>
-      {hover ? <VideoPlayer videoSrc={videoPreviewSrc} posterSrc={imgSrc} /> : <img src={imgSrc} alt={title} width='280' height='175' />}
+      {hover ?
+        <VideoPlayer videoSrc={film.previewVideoLink} posterSrc={film.previewImage} /> :
+        <img src={film.previewImage} alt={film.name} width='280' height='175' />}
       <h3 className='small-film-card__title'>
-        <Link to={`/films/${id}`} className='small-film-card__link'>{title}</Link>
+        <Link to={`/films/${film.id}`} className='small-film-card__link'>{film.name}</Link>
       </h3>
     </article>
   );

@@ -6,8 +6,11 @@ import { FilmsList } from '../../components/films-list/films-list';
 import { FilmCardDescription } from '../../components/film-card-description/film-card-description';
 import { Tabs } from '../../components/tabs/tabs';
 import { IFilm, IFilms } from '../../types/IFilmInfo';
+import { Spinner } from '../../components/spinner/spinner';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchFilmAction } from '../../store/api-actions';
 
 function PageHeader() {
   return (
@@ -22,7 +25,7 @@ function FilmCardHero({ film }: IFilm) {
   return (
     <div className='film-card__hero'>
       <div className='film-card__bg'>
-        <img src={film.posterImage} alt={film.name} />
+        <img src={film.backgroundImage} alt={film.name} />
       </div>
       <h1 className='visually-hidden'>WTW</h1>
       <PageHeader />
@@ -40,7 +43,7 @@ function FilmCardWrap({ film }: IFilm) {
         <div className='film-card__poster film-card__poster--big'>
           <img src={film.posterImage} alt={film.name} width='218' height='327' />
         </div>
-        <Tabs film={film} />
+        <Tabs />
       </div>
     </div>
   );
@@ -59,24 +62,29 @@ function PageContent({ films }: IFilms) {
 
 export function Film() {
   const { id } = useParams();
-  const { allFilms } = useAppSelector((state) => state);
+  useEffect(() => {
+    if (id !== currentFilm?.id.toString() && id !== undefined) {
+      dispatch(fetchFilmAction(id));
+    }
+  });
 
+  const dispatch = useAppDispatch();
+  const { currentFilm, similarFilms, isDataLoaded, error } = useAppSelector((state) => state);
 
-  if (id === undefined) {
-    return <NotFoundError />;
+  if (!isDataLoaded) {
+    return <Spinner />;
   }
 
-  const film = allFilms[0];
-  if (film === undefined) {
+  if (id === undefined || currentFilm === undefined || similarFilms === undefined || error) {
     return <NotFoundError />;
   }
   return (
     <div>
       <section className='film-card film-card--full'>
-        <FilmCardHero film={film} />
-        <FilmCardWrap film={film} />
+        <FilmCardHero film={currentFilm} />
+        <FilmCardWrap film={currentFilm} />
       </section>
-      <PageContent films={allFilms} />
+      <PageContent films={similarFilms} />
     </div>
   );
 }
