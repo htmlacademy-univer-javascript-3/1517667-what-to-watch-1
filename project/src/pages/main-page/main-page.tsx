@@ -36,7 +36,7 @@ function FilmCard({ film }: IFilm) {
   return (
     <section className='film-card'>
       <div className='film-card__bg'>
-        <img src={film.posterImage} alt={film.name} />
+        <img src={film.backgroundImage} alt={film.name} />
       </div>
       <h1 className='visually-hidden'>WTW</h1>
       <Header />

@@ -1,10 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
 import { IFilmInfo } from './types/IFilmInfo';
+import { AuthorizationStatus } from './components/private-route/private-route';
 
-export const changeGenreAction = createAction('CHANGE_GENRE', (value: string) => ({ payload: value }));
+export const changeGenreAction = createAction<string>('CHANGE_GENRE');
 export const turnToNextPageAction = createAction('NEXT_PAGE',);
-export const setLoadedStatusAction = createAction('LOAD', (value: boolean) => ({ payload: value }));
-export const initAllFilmsAction = createAction('SET_ALL_FILMS', (value: IFilmInfo[]) => ({ payload: value }));
-export const setPromoFilmAction = createAction('SET_PROMO_FILM', (value: IFilmInfo) => ({ payload: value }));
-export const setErrorAction = createAction('SET_ERROR', (value: string | null) => ({ payload: value }));
-export const setCurrentFilmAction = createAction('SET_CURRENT_FILM', (value: IFilmInfo) => ({ payload: value }));
+export const setLoadedStatusAction = createAction<boolean>('LOAD');
+export const initAllFilmsAction = createAction<IFilmInfo[]>('SET_ALL_FILMS');
+export const setPromoFilmAction = createAction<IFilmInfo>('SET_PROMO_FILM');
+export const setErrorAction = createAction<string | null>('SET_ERROR');
+export const setCurrentFilmAction = createAction<IFilmInfo>('SET_CURRENT_FILM');
+export const requireAuthorization = createAction<AuthorizationStatus>('REQUIRE_AUTHORIZATION');
+export const redirectToRoute = createAction<string>('REDIRECT_TO_ROUTE');
