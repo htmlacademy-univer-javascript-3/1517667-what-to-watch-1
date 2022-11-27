@@ -5,9 +5,15 @@ import {
   setLoadedStatusAction,
   initAllFilmsAction,
   setPromoFilmAction,
-  setErrorAction
+  setErrorAction,
+  requireAuthorization,
+  redirectToRoute
 } from '../action';
+import { AuthorizationStatus } from '../components/private-route/private-route';
+import { saveToken, dropToken } from './token';
 import { store } from '.';
+import { UserData } from '../types/UserData';
+import { AuthData } from '../types/AuthData';
 import { IState } from '../reducer';
 
 export type AppDispatch = typeof store.dispatch;
@@ -40,5 +46,49 @@ export const clearErrorAction = createAsyncThunk(
       () => store.dispatch(setErrorAction(null)),
       2000,
     );
+  },
+);
+
+export const checkAuthAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: IState,
+  extra: AxiosInstance
+}>(
+  'user/checkAuth',
+  async (_arg, { dispatch, extra: api }) => {
+    try {
+      await api.get('/login');
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch {
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const loginAction = createAsyncThunk<void, AuthData, {
+  dispatch: AppDispatch,
+  state: IState,
+  extra: AxiosInstance
+}>(
+  'user/login',
+  async ({ login: email, password }, { dispatch, extra: api }) => {
+    const { data: { token } } = await api.post<UserData>('/login', { email, password });
+    saveToken(token);
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute('/'));
+  },
+);
+
+export const logoutAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: IState,
+  extra: AxiosInstance
+}>(
+  'user/logout',
+  async (_arg, { dispatch, extra: api }) => {
+    await api.delete('/logout');
+    dropToken();
+    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(redirectToRoute('/'));
   },
 );
