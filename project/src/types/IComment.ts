@@ -8,3 +8,8 @@ export interface IComment {
     name: string
   }
 }
+
+export interface ICommentsInfo {
+  filmId: number;
+  comments: IComment[];
+}

@@ -5,9 +5,10 @@ import { GenresList } from '../../components/genres-list/genres-list';
 import { FilmsList } from '../../components/films-list/films-list';
 import { IFilm } from '../../types/IFilmInfo';
 import { FilmCardDescription } from '../../components/film-card-description/film-card-description';
-import { IState } from '../../reducer';
 import { NotFoundError } from '../not-found-error/not-found-error';
 import { useAppSelector } from '../../hooks';
+import { getPromoFilm, isPromoLoading, getPageFilms } from '../../store/general-data/selector';
+import { Spinner } from '../../components/spinner/spinner';
 
 function Header() {
   return (
@@ -46,28 +47,24 @@ function FilmCard({ film }: IFilm) {
 }
 
 function Catalog() {
-  const { pageFilms: films } = useAppSelector((state: IState) => state);
+  const pageFilms = useAppSelector(getPageFilms);
 
   return (
     <section className='catalog'>
       <h2 className='catalog__title visually-hidden'>Catalog</h2>
       <GenresList />
-      <FilmsList films={films}/>
+      <FilmsList films={pageFilms} />
     </section>
   );
 }
 
-function PageContent() {
-  return (
-    <div className='page-content'>
-      <Catalog />
-      <Footer />
-    </div>
-  );
-}
-
 export function MainPage() {
-  const { promo } = useAppSelector((state: IState) => state);
+  const promo = useAppSelector(getPromoFilm);
+  const promoLoading = useAppSelector(isPromoLoading);
+  
+  if (promoLoading) {
+    return <Spinner />;
+  }
 
   if (!promo) {
     return <NotFoundError />;
@@ -76,7 +73,10 @@ export function MainPage() {
   return (
     <div>
       <FilmCard film={promo} />
-      <PageContent />
+      <div className='page-content'>
+        <Catalog />
+        <Footer />
+      </div>
     </div>
   );
 }

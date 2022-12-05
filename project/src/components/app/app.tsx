@@ -10,13 +10,15 @@ import { Routes, Route } from 'react-router-dom';
 import { HistoryRouter } from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
 import { Spinner } from '../spinner/spinner';
-import { IState } from '../../reducer';
 import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/auth-process/selectors';
+import { fetchingInProgress } from '../../store/general-data/selector';
 
 function App(): JSX.Element {
-  const { isDataLoaded, authorizationStatus } = useAppSelector((state: IState) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoading = useAppSelector(fetchingInProgress);
 
-  if (!isDataLoaded) {
+  if (isDataLoading) {
     return <Spinner />;
   }
 

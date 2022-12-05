@@ -5,12 +5,13 @@ import { UserBlock } from '../../components/user-block/user-block';
 import { FilmsList } from '../../components/films-list/films-list';
 import { FilmCardDescription } from '../../components/film-card-description/film-card-description';
 import { Tabs } from '../../components/tabs/tabs';
-import { IFilm, IFilms } from '../../types/IFilmInfo';
+import { IFilm } from '../../types/IFilmInfo';
 import { Spinner } from '../../components/spinner/spinner';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchFilmAction } from '../../store/api-actions';
+import { fetchFilmAction, fetchSimilarAction } from '../../store/api-actions';
+import { getCurrentFilm, isFilmInLoading, getSimilarFilms, areSimilarInLoading } from '../../store/film-data/selectors';
 
 function PageHeader() {
   return (
@@ -48,12 +49,20 @@ function FilmCardWrap({ film }: IFilm) {
     </div>
   );
 }
-function PageContent({ films }: IFilms) {
+
+function PageContent() {
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const areSimilarLoading = useAppSelector(areSimilarInLoading);
+
+  if (areSimilarLoading) {
+    return <></>;
+  }
+
   return (
     <div className='page-content'>
       <section className='catalog catalog--like-this'>
         <h2 className='catalog__title'>More like this</h2>
-        <FilmsList films={films} />
+        <FilmsList films={similarFilms} />
       </section>
       <Footer />
     </div>
@@ -63,19 +72,22 @@ function PageContent({ films }: IFilms) {
 export function Film() {
   const { id } = useParams();
   useEffect(() => {
-    if (id !== currentFilm?.id.toString() && id !== undefined) {
+    if (id !== undefined) {
       dispatch(fetchFilmAction(id));
+      dispatch(fetchSimilarAction(id));
     }
-  });
+  }, [id]);
 
   const dispatch = useAppDispatch();
-  const { currentFilm, similarFilms, isDataLoaded, error } = useAppSelector((state) => state);
 
-  if (!isDataLoaded) {
+  const currentFilm = useAppSelector(getCurrentFilm);
+  const isFilmLoading = useAppSelector(isFilmInLoading);
+
+  if (isFilmLoading) {
     return <Spinner />;
   }
 
-  if (id === undefined || currentFilm === undefined || similarFilms === undefined || error) {
+  if (id === undefined || currentFilm === undefined || getSimilarFilms === undefined) {
     return <NotFoundError />;
   }
   return (
@@ -84,7 +96,7 @@ export function Film() {
         <FilmCardHero film={currentFilm} />
         <FilmCardWrap film={currentFilm} />
       </section>
-      <PageContent films={similarFilms} />
+      <PageContent />
     </div>
   );
 }

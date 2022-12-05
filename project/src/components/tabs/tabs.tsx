@@ -39,10 +39,10 @@ export function Tabs() {
       <nav className='film-nav film-card__nav'>
         <ul className='film-nav__list'>
           {
-            tabs.map((x, index) => (
-              <li key={x.id} className={`film-nav__item ${activeTab === index && 'film-nav__item--active'}`}>
+            tabs.map((tab, index) => (
+              <li key={tab.id} className={`film-nav__item ${activeTab === index && 'film-nav__item--active'}`}>
                 <TabHeader
-                  title={x.title}
+                  title={tab.title}
                   onItemClicked={() => setActiveTab(index)}
                 />
               </li>
@@ -51,7 +51,7 @@ export function Tabs() {
         </ul>
       </nav>
 
-      {tabs.map((x) => (x.child()))[activeTab]}
+      {tabs.map((tab) => (tab.child()))[activeTab]}
     </div>
   );
 }
