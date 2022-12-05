@@ -12,9 +12,14 @@ export function VideoPlayer({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    videoRef.current?.load();
-    videoRef.current?.play();
-    return () => videoRef.current?.pause();
+    const video = videoRef.current;
+    video?.load();
+    video?.play();
+    return () => {
+      if (!video?.paused) {
+        videoRef.current?.pause();
+      }
+    };
   });
 
   return (

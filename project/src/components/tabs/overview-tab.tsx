@@ -1,11 +1,13 @@
 import { useAppSelector } from '../../hooks';
 import { Spinner } from '../spinner/spinner';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
+import { getCurrentFilm, isFilmInLoading } from '../../store/film-data/selectors';
 
 export function OverviewTab() {
-  const { currentFilm, isDataLoaded } = useAppSelector((state) => state);
+  const currentFilm = useAppSelector(getCurrentFilm);
+  const currentFilmLoading = useAppSelector(isFilmInLoading);
 
-  if (!isDataLoaded) {
+  if (currentFilmLoading) {
     return <Spinner />;
   }
 

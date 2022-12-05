@@ -1,34 +1,21 @@
-import React from 'react';
 import { store } from '../../store';
-import { turnToNextPageAction } from '../../action';
+import { turnToNextPageAction } from '../../store/general-data/general-data';
 import { SmallFilmCard } from '../small-film-card/small-film-card';
 import { useAppSelector } from '../../hooks';
 import { IFilms } from '../../types/IFilmInfo';
+import { isPageLast } from '../../store/general-data/selector';
 
 export function FilmsList({ films }: IFilms) {
-  const [activeId, setActiveId] = React.useState(0);
-  const { isLastPage } = useAppSelector((state) => state);
-
-  const makeElementActive = (id: number) => {
-    if (id !== activeId) {
-      setActiveId(() => id);
-    }
-  };
-
-  const clearActiveElement = () => {
-    setActiveId(() => 0);
-  };
+  const isLastPage = useAppSelector(isPageLast);
 
   return (
     <>
       <div className='catalog__films-list'>
         {
-          films.map((x, index) => (
+          films.map((film, index) => (
             <SmallFilmCard
-              key={`${x.id}-${index - 1}`}
-              film={x}
-              onHover={makeElementActive}
-              onMouseLeave={clearActiveElement}
+              key={`${film.id}-${index - 1}`}
+              film={film}
             />)
           )
         }

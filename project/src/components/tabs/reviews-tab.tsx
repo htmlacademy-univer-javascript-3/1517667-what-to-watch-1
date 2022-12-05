@@ -4,6 +4,8 @@ import { Spinner } from '../spinner/spinner';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { useEffect } from 'react';
 import { fetchReviewsAction } from '../../store/api-actions';
+import { getCurrentFilm } from '../../store/film-data/selectors';
+import { getReviews, getReviewsFilmId, areReviewsInLoading } from '../../store/film-reviews-data/selector';
 
 interface ICommentWrap {
   comment: IComment
@@ -39,17 +41,19 @@ function ReviewsColumn({ comments } : ICommentsWrap) {
 }
 
 export function ReviewsTab() {
-  const { currentFilm, reviewsFilmId, reviews, isDataLoaded } = useAppSelector((state) => state);
+  const currentFilm = useAppSelector(getCurrentFilm);
+  const reviewsFilmId = useAppSelector(getReviewsFilmId);
+  const areReviewsLoading = useAppSelector(areReviewsInLoading);
+  const reviews = useAppSelector(getReviews);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (currentFilm !== undefined && (reviewsFilmId === undefined || currentFilm.id !== reviewsFilmId)) {
+    if (currentFilm !== undefined && currentFilm.id !== reviewsFilmId) {
       dispatch(fetchReviewsAction(currentFilm.id));
     }
   });
 
-  const dispatch = useAppDispatch();
-
-  if (!isDataLoaded) {
+  if (areReviewsLoading) {
     return <Spinner />;
   }
 
@@ -57,10 +61,9 @@ export function ReviewsTab() {
     return <NotFoundError />;
   }
 
-  const reviewsCopy = [...reviews];
-  const middle = Math.round(reviewsCopy.length / 2);
-  const firstColumn = reviewsCopy.splice(0, middle);
-  const secondColumn = reviewsCopy.splice(middle);
+  const middle = Math.round(reviews.length / 2);
+  const firstColumn = reviews.slice(0, middle);
+  const secondColumn = reviews.slice(middle);
   return (
     <div className='film-card__reviews film-card__row'>
       <ReviewsColumn comments={firstColumn} />

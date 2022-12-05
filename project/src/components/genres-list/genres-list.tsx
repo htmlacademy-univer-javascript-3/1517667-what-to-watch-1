@@ -1,9 +1,11 @@
 import { store } from '../../store';
-import { changeGenreAction } from '../../action';
+import { changeGenreAction } from '../../store/general-data/general-data';
 import { useAppSelector } from '../../hooks';
+import { getGenres, getCurrentGenre } from '../../store/general-data/selector';
 
 export function GenresList() {
-  const { genresList, currentGenre } = useAppSelector((state) => state);
+  const genresList = useAppSelector(getGenres);
+  const currentGenre = useAppSelector(getCurrentGenre);
 
   return (
     <ul className='catalog__genres-list'>

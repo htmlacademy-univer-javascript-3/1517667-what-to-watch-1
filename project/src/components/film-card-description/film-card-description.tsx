@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { IFilm } from '../../types/IFilmInfo';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../private-route/private-route';
+import { getAuthorizationStatus } from '../../store/auth-process/selectors';
 
 interface IFilmId {
   id: number;
@@ -20,7 +21,7 @@ export interface IFilmCard extends IFilmCardDesc {
 }
 
 function FilmCardButtons({ id }: IFilmId) {
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <div className='film-card__buttons'>

@@ -1,7 +1,4 @@
-import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
-import { clearErrorAction } from './store/api-actions';
-import { setErrorAction } from './action';
-import { store } from './store';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { getToken } from './store/token';
 
 const StatusCodeMapping: Record<number, boolean> = {
@@ -10,7 +7,7 @@ const StatusCodeMapping: Record<number, boolean> = {
   [404]: true
 };
 
-const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
+//const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
 
 export function getApi() {
   const api = axios.create({
@@ -30,21 +27,5 @@ export function getApi() {
     },
   );
 
-  api.interceptors.response.use(
-    (response) => response,
-    (error: AxiosError) => {
-      if (error.response && shouldDisplayError(error.response)) {
-        processErrorHandle(error.response.data.error);
-      }
-
-      throw error;
-    }
-  );
-
   return api;
 }
-
-const processErrorHandle = (message: string): void => {
-  store.dispatch(setErrorAction(message));
-  store.dispatch(clearErrorAction());
-};
