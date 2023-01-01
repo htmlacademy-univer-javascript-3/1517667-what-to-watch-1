@@ -14,6 +14,9 @@ export function ReviewComponent(props: ReviewProps) {
       value={review}
       placeholder='Review text'
       onChange={(e) => onChange(e.target.value)}
+      maxLength={400}
+      minLength={50}
+      required
     >
     </textarea>
   );

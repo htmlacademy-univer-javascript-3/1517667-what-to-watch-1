@@ -6,9 +6,11 @@ import { FilmsList } from '../../components/films-list/films-list';
 import { IFilm } from '../../types/IFilmInfo';
 import { FilmCardDescription } from '../../components/film-card-description/film-card-description';
 import { NotFoundError } from '../not-found-error/not-found-error';
-import { useAppSelector } from '../../hooks';
-import { getPromoFilm, isPromoLoading, getPageFilms } from '../../store/general-data/selector';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { getPromoFilm, isPromoLoading, getPageFilms, isPageLast } from '../../store/general-data/selector';
+import { changeGenreAction, turnToNextPageAction } from '../../store/general-data/general-data';
 import { Spinner } from '../../components/spinner/spinner';
+import { useEffect } from 'react';
 
 function Header() {
   return (
@@ -47,13 +49,25 @@ function FilmCard({ film }: IFilm) {
 }
 
 function Catalog() {
+  const isLastPage = useAppSelector(isPageLast);
   const pageFilms = useAppSelector(getPageFilms);
+  const dispatch = useAppDispatch();
+
+  const changeGenre = (genre: string) => dispatch(changeGenreAction(genre));
+  useEffect(() => {
+    changeGenre('All genres');
+  }, []);
 
   return (
     <section className='catalog'>
       <h2 className='catalog__title visually-hidden'>Catalog</h2>
-      <GenresList />
+      <GenresList changeFunction={changeGenre}/>
       <FilmsList films={pageFilms} />
+      {!isLastPage &&
+        <div className='catalog__more'>
+          <button className='catalog__button' type='button' onClick={() => dispatch(turnToNextPageAction())}>Show more
+          </button>
+        </div>}
     </section>
   );
 }
@@ -61,7 +75,6 @@ function Catalog() {
 export function MainPage() {
   const promo = useAppSelector(getPromoFilm);
   const promoLoading = useAppSelector(isPromoLoading);
-  
   if (promoLoading) {
     return <Spinner />;
   }

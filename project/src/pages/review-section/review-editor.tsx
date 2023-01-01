@@ -24,7 +24,7 @@ export function ReviewEditor({ filmId }: FilmId) {
   );
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+    //evt.preventDefault();
     dispatch(addReviewAction({ comment: review, filmId: filmId, rating: rating }));
   };
 

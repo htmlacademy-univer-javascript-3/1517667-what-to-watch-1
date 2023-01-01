@@ -19,7 +19,7 @@ export function ReviewPageHeader({ film }: IFilm) {
           </li>
           {authorizationStatus === AuthorizationStatus.Auth && (
             <li className='breadcrumbs__item'>
-              <Link to={`/addreview/${film.id}`} className='breadcrumbs__link'>Add review</Link>
+              <Link to={`/films/${film.id}/review`} className='breadcrumbs__link'>Add review</Link>
             </li>
           )}
         </ul>

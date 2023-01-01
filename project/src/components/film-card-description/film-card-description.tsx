@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { IFilm } from '../../types/IFilmInfo';
-import { useAppSelector } from '../../hooks';
+import { useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AuthorizationStatus } from '../private-route/private-route';
 import { getAuthorizationStatus } from '../../store/auth-process/selectors';
-
-interface IFilmId {
-  id: number;
-}
+import { changeFilmFavoriteStatus } from '../../store/api-actions';
+import { getFavoritesCount } from '../../store/favorite-data/selectors';
+import { incrementFavoritesAction, decrementFavoritesAction } from '../../store/favorite-data/favorite-data';
 
 export interface IFilmCardDesc {
   id: string;
@@ -20,39 +20,52 @@ export interface IFilmCard extends IFilmCardDesc {
   posterAlt: string;
 }
 
-function FilmCardButtons({ id }: IFilmId) {
+function UserButtons({ film }: IFilm) {
+  const [favoritesCount, setFavoritesCount] = useState(useAppSelector(getFavoritesCount));
+  const [isFavorite, setIsFavorite] = useState(film.isFavorite);
+
+  const dispatch = useAppDispatch();
+  const addToFavorites = () => {
+    dispatch(changeFilmFavoriteStatus({ filmId: film.id, status: isFavorite ? 0 : 1 }));
+    isFavorite ? dispatch(decrementFavoritesAction()) : dispatch(incrementFavoritesAction());
+    setFavoritesCount(isFavorite ? favoritesCount - 1 : favoritesCount + 1);
+    setIsFavorite(!isFavorite);
+  };
+
+  return (
+    <>
+      <button className='btn btn--list film-card__button' type='button' onClick={addToFavorites}>
+        <svg viewBox='0 0 19 20' width='19' height='20'>
+          <use xlinkHref={isFavorite ? '#in-list' : '#add'}></use>
+        </svg>
+        <span>My list</span>
+        <span className='film-card__count'>{favoritesCount}</span>
+      </button>
+
+      <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
+    </>
+  );
+}
+
+function FilmCardButtons({ film }: IFilm) {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <div className='film-card__buttons'>
-
       <button className='btn btn--play film-card__button' type='button'>
-        <Link to={`/player/${id}`}>
+        <Link to={`/player/${film.id}`}>
           <svg viewBox='0 0 19 19' width='19' height='19'>
             <use xlinkHref='#play-s'></use>
           </svg>
         </Link>
         <span>Play</span>
       </button>
-
-      <button className='btn btn--list film-card__button' type='button'>
-        <svg viewBox='0 0 19 20' width='19' height='20'>
-          <use xlinkHref='#add'></use>
-        </svg>
-        <span>My list</span>
-        <span className='film-card__count'>9</span>
-      </button>
-
-      {
-        authorizationStatus === AuthorizationStatus.Auth && (
-          <Link to={`/addreview/${id}`} className="btn film-card__button">Add review</Link>
-        )
-      }
+      { authorizationStatus === AuthorizationStatus.Auth && (<UserButtons film={film}/>) }
     </div>
   );
 }
 
-export function FilmCardDescription({film} : IFilm) {
+export function FilmCardDescription({ film }: IFilm) {
   return (
     <div className='film-card__desc'>
       <h2 className='film-card__title'>{film.name}</h2>
@@ -61,7 +74,7 @@ export function FilmCardDescription({film} : IFilm) {
         <span className='film-card__year'>{film.released}</span>
       </p>
 
-      <FilmCardButtons id={film.id} />
+      <FilmCardButtons film={film} />
     </div>
   );
 }

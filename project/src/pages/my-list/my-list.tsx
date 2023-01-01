@@ -3,10 +3,23 @@ import { Footer } from '../../components/footer/footer';
 import { Spinner } from '../../components/spinner/spinner';
 import { UserBlock } from '../../components/user-block/user-block';
 import { FilmsList } from '../../components/films-list/films-list';
-import { useAppSelector } from '../../hooks';
-import { getFavoriteFilms, areFavoriteFilmsInLoading } from '../../store/favorite-data/selectors';
+import { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { getFavoriteFilms, areFavoriteFilmsInLoading, areFavoriteFilmsOutdated } from '../../store/favorite-data/selectors';
+// import { store } from '../../store';
+import { getFavoriteFilmsAction } from '../../store/api-actions';
+
+// store.dispatch(getFavoriteFilmsAction());
 
 export function MyList() {
+  const areFavoriteOutdated = useAppSelector(areFavoriteFilmsOutdated);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (areFavoriteOutdated) {
+      dispatch(getFavoriteFilmsAction());
+    }
+  });
+
   const films = useAppSelector(getFavoriteFilms);
   const areInLoading = useAppSelector(areFavoriteFilmsInLoading);
 
