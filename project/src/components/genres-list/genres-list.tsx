@@ -1,10 +1,13 @@
-import { store } from '../../store';
-import { changeGenreAction } from '../../store/general-data/general-data';
+
 import { useAppSelector } from '../../hooks';
 import { getGenres, getCurrentGenre } from '../../store/general-data/selector';
 
-export function GenresList() {
-  const genresList = useAppSelector(getGenres);
+interface IGenresList {
+  changeFunction: (genre: string) => void;
+}
+
+export function GenresList({ changeFunction } : IGenresList) {
+  const genresList = useAppSelector(getGenres).slice(0, 10);
   const currentGenre = useAppSelector(getCurrentGenre);
 
   return (
@@ -16,7 +19,7 @@ export function GenresList() {
               className='catalog__genres-link'
               onClick={() => {
                 if (genre !== currentGenre) {
-                  store.dispatch(changeGenreAction(genre));
+                  changeFunction(genre);
                 }
               }}
             >

@@ -51,11 +51,11 @@ function FilmCardWrap({ film }: IFilm) {
 }
 
 function PageContent() {
-  const similarFilms = useAppSelector(getSimilarFilms);
+  const similarFilms = useAppSelector(getSimilarFilms).slice(0, 4);
   const areSimilarLoading = useAppSelector(areSimilarInLoading);
 
   if (areSimilarLoading) {
-    return <></>;
+    return null;
   }
 
   return (

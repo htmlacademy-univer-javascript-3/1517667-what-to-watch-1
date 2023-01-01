@@ -13,12 +13,14 @@ import { Spinner } from '../spinner/spinner';
 import { useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/auth-process/selectors';
 import { fetchingInProgress } from '../../store/general-data/selector';
+import { areFavoriteFilmsInLoading } from '../../store/favorite-data/selectors';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(fetchingInProgress);
+  const areFavoritesLoading = useAppSelector(areFavoriteFilmsInLoading);
 
-  if (isDataLoading) {
+  if (isDataLoading || areFavoritesLoading) {
     return <Spinner />;
   }
 
@@ -34,9 +36,13 @@ function App(): JSX.Element {
         }
         />
         <Route path="/films/:id" element={<Film />} />
-        <Route path="/films/:id/review" element={<ReviewSection />} />
+        <Route path="/films/:id/review" element={
+          <PrivateRoute authStatus={authorizationStatus}>
+            <ReviewSection />
+          </PrivateRoute>
+        }
+        />
         <Route path="/player/:id" element={<Player />} />
-        <Route path="/addreview/:id" element={<ReviewSection />} />
         <Route path="*" element={<NotFoundError />} />
       </Routes>
     </HistoryRouter>

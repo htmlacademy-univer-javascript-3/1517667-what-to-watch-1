@@ -1,11 +1,11 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';//AxiosResponse,
 import { getToken } from './store/token';
 
-const StatusCodeMapping: Record<number, boolean> = {
-  [400]: true,
-  [401]: true,
-  [404]: true
-};
+// const StatusCodeMapping: Record<number, boolean> = {
+//   [400]: true,
+//   [401]: true,
+//   [404]: true
+// };
 
 //const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
 

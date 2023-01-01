@@ -5,7 +5,7 @@ import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { useEffect } from 'react';
 import { fetchReviewsAction } from '../../store/api-actions';
 import { getCurrentFilm } from '../../store/film-data/selectors';
-import { getReviews, getReviewsFilmId, areReviewsInLoading } from '../../store/film-reviews-data/selector';
+import { getReviews, getReviewsFilmId, areReviewsInLoading, areReviewsOutdated } from '../../store/film-reviews-data/selector';
 
 interface ICommentWrap {
   comment: IComment
@@ -16,6 +16,26 @@ interface ICommentsWrap {
 }
 
 function SingleReviewBlock({ comment } : ICommentWrap) {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  const formatTime = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return `${months[date.getMonth()]} ${date.getDay()}, ${date.getFullYear()}`;
+  };
+
   return (
     <div className='review'>
       <blockquote className='review__quote'>
@@ -23,7 +43,7 @@ function SingleReviewBlock({ comment } : ICommentWrap) {
 
         <footer className='review__details'>
           <cite className='review__author'>{comment.user.name}</cite>
-          <time className='review__date' dateTime={comment.date}>{comment.date}</time>
+          <time className='review__date' dateTime={comment.date}>{formatTime(comment.date)}</time>
         </footer>
       </blockquote>
 
@@ -41,6 +61,7 @@ function ReviewsColumn({ comments } : ICommentsWrap) {
 }
 
 export function ReviewsTab() {
+  const outdated = useAppSelector(areReviewsOutdated);
   const currentFilm = useAppSelector(getCurrentFilm);
   const reviewsFilmId = useAppSelector(getReviewsFilmId);
   const areReviewsLoading = useAppSelector(areReviewsInLoading);
@@ -48,7 +69,7 @@ export function ReviewsTab() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (currentFilm !== undefined && currentFilm.id !== reviewsFilmId) {
+    if (currentFilm !== undefined && (outdated || currentFilm.id !== reviewsFilmId)) {
       dispatch(fetchReviewsAction(currentFilm.id));
     }
   });

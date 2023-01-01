@@ -1,33 +1,51 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Namespace } from '../../types/Namespace';
 import { IFilmInfo } from '../../types/IFilmInfo';
-import { getFavoriteFilmsAction } from '../api-actions';
+import { getFavoriteFilmsAction, changeFilmFavoriteStatus } from '../api-actions';
 
 interface IFavoriteData {
   favoriteFilms: IFilmInfo[];
-  favoriteLoading: boolean;
+  favoritesCount: number;
+  areFavoriteLoading: boolean;
+  areFavoriteOutdated: boolean;
 }
 
 const initialState = {
   favoriteFilms: [],
-  favoriteLoading: false,
+  favoritesCount: 0,
+  areFavoriteLoading: false,
+  areFavoriteOutdated: true,
 } as IFavoriteData;
 
 export const favoriteData = createSlice({
   name: Namespace.FilmData,
   initialState,
-  reducers: {},
+  reducers: {
+    incrementFavoritesAction: (state) => {
+      state.favoritesCount = state.favoritesCount + 1;
+    },
+    decrementFavoritesAction: (state) => {
+      state.favoritesCount = state.favoritesCount - 1;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getFavoriteFilmsAction.pending, (state) => {
-        state.favoriteLoading = true;
+        state.areFavoriteLoading = true;
       })
       .addCase(getFavoriteFilmsAction.fulfilled, (state, action) => {
         state.favoriteFilms = action.payload;
-        state.favoriteLoading = false;
+        state.favoritesCount = action.payload.length;
+        state.areFavoriteLoading = false;
+        state.areFavoriteOutdated = false;
       })
       .addCase(getFavoriteFilmsAction.rejected, (state) => {
-        state.favoriteLoading = false;
+        state.areFavoriteLoading = false;
+      })
+      .addCase(changeFilmFavoriteStatus.fulfilled, (state) => {
+        state.areFavoriteOutdated = true;
       });
   }
 });
+
+export const { incrementFavoritesAction, decrementFavoritesAction } = favoriteData.actions;
