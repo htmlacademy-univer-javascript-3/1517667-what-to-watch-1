@@ -3,7 +3,7 @@ import { Namespace } from '../../types/Namespace';
 import { IComment } from '../../types/IComment';
 import { fetchReviewsAction, addReviewAction } from '../api-actions';
 
-interface IReviewsData {
+export interface IReviewsData {
   reviewsFilmId: number;
   areReviewsOutdated: boolean;
   areReviewsLoading: boolean;

@@ -5,7 +5,7 @@ import { setInitFilmsInfo, setPromoFilmInfo } from '../api-actions';
 
 const PAGE_SIZE = 8;
 
-interface IGeneralData {
+export interface IGeneralData {
   allFilms: IFilmInfo[];
   genresList: string[];
   genreToFilms: { [id: string]: IFilmInfo[] };

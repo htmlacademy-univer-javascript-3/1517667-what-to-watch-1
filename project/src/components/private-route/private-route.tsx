@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
 export enum AuthorizationStatus {
+  Unknown,
   Auth,
   NoAuth
 }
