@@ -85,7 +85,7 @@ export const makeFakeCommentsInfo = (): ICommentsInfo => (
           'name': 'Emely'
         },
         'rating': 9.9,
-        'comment': 'I personally found this movie to be boring. Definitely one of the most boring movies I've ever seen.',
+        'comment': 'I personally found this movie to be boring. Definitely one of the most boring movies I\'ve ever seen.',
         'date': '2022-06-03T12:25:36.946Z'
       },
       {
@@ -95,7 +95,7 @@ export const makeFakeCommentsInfo = (): ICommentsInfo => (
           'name': 'Mollie'
         },
         'rating': 1.1,
-        'comment': 'I personally found this movie to be boring. Definitely one of the most boring movies I've ever seen.',
+        'comment': 'I personally found this movie to be boring. Definitely one of the most boring movies I\'ve ever seen.',
         'date': '2022-06-23T12:25:36.946Z'
       }
     ]
