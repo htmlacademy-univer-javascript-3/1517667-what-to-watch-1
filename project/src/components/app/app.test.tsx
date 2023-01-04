@@ -115,7 +115,7 @@ describe('Application Routing', () => {
     render(fakeApp);
 
     expect(screen.getByText(/My list/i)).toBeInTheDocument();
-  }); 
+  });
 
   it('should render not found when user navigate to non-existent route', () => {
     history.push('/non-existent-route');

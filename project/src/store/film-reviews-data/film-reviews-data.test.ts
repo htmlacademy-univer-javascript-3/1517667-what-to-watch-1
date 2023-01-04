@@ -1,6 +1,6 @@
-import { reviewsData, IReviewsData } from "./film-reviews-data";
-import { fetchReviewsAction, addReviewAction } from "../api-actions";
-import { makeFakeCommentsInfo } from "../../utils/mocks";
+import { reviewsData, IReviewsData } from './film-reviews-data';
+import { fetchReviewsAction, addReviewAction } from '../api-actions';
+import { makeFakeCommentsInfo } from '../../utils/mocks';
 
 const mockCommentsInfo = makeFakeCommentsInfo();
 
