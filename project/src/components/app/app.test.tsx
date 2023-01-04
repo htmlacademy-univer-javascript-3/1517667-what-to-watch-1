@@ -58,7 +58,7 @@ const fakeApp = (
 
 describe('Application Routing', () => {
   it('should render main page when user navigate to "/"', () => {
-    history.push("/");
+    history.push('/');
 
     render(fakeApp);
 
@@ -68,7 +68,7 @@ describe('Application Routing', () => {
   });
 
   it('should render login page when user navigate to "/login"', () => {
-    history.push("/login");
+    history.push('/login');
 
     render(fakeApp);
 
@@ -77,7 +77,7 @@ describe('Application Routing', () => {
   });
 
   it('should render film page when user navigate to "/films/{id}"', () => {
-    history.push("/films/1");
+    history.push('/films/1');
 
     render(fakeApp);
 
@@ -93,7 +93,7 @@ describe('Application Routing', () => {
   });
 
   it('should render player when user navigate to "/player/{id}"', () => {
-    history.push("/player/1");
+    history.push('/player/1');
 
     render(fakeApp);
 
@@ -102,7 +102,7 @@ describe('Application Routing', () => {
   });
 
   it('should render reviews editor when user navigate to "/films/{id}/review"', () => {
-    history.push("/films/1/review");
+    history.push('/films/1/review');
 
     render(fakeApp);
 
@@ -110,7 +110,7 @@ describe('Application Routing', () => {
   });
 
   it('should render favorites list when user navigate to "/mylist"', () => {
-    history.push("/mylist");
+    history.push('/mylist');
 
     render(fakeApp);
 

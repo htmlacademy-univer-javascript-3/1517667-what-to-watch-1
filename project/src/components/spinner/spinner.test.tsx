@@ -11,6 +11,6 @@ describe('Component: Footer', () => {
     const text = screen.getByText('Please, wait');
 
     expect(header).toBeInTheDocument();
-    expect(text).toBeInTheDocument(); 
+    expect(text).toBeInTheDocument();
   });
 });

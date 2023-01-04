@@ -1,7 +1,7 @@
-import { generalData, IGeneralData } from "./general-data";
-import { makeFakeFilms, makeFakeFilm } from "../../utils/mocks";
-import { setInitFilmsInfo, setPromoFilmInfo } from "../api-actions";
-import { changeGenreAction, turnToNextPageAction } from "./general-data";
+import { generalData, IGeneralData } from './general-data';
+import { makeFakeFilms, makeFakeFilm } from '../../utils/mocks';
+import { setInitFilmsInfo, setPromoFilmInfo } from '../api-actions';
+import { changeGenreAction } from './general-data';
 
 const mockFilms = makeFakeFilms();
 const mockFilm = makeFakeFilm();
@@ -49,7 +49,7 @@ describe('Reducer: generalData', () => {
       state.genreToFilms = {
         'All genres': mockFilms,
         'Drama': [mockFilms[0]]
-      }
+      };
       expect(generalData.reducer(state, changeGenreAction('Drama')))
         .toEqual({
           allFilms: [],
@@ -66,6 +66,6 @@ describe('Reducer: generalData', () => {
           allFilmsLoading: false,
           promoLoading: false,
         });
-    })
+    });
   });
 });

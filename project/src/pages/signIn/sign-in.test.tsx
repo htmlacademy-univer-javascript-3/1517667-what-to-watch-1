@@ -1,10 +1,10 @@
-import { SignIn } from "./sign-in";
+import { SignIn } from './sign-in';
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
-import { HistoryRouter } from "../../components/history-router/history-router";
+import { HistoryRouter } from '../../components/history-router/history-router';
 
 const mockStore = configureMockStore();
 

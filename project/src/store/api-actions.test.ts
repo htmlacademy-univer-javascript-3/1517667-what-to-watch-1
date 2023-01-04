@@ -1,6 +1,6 @@
 import { Action } from 'redux';
-import { getApi } from "../api";
-import { State } from "../types/state";
+import { getApi } from '../api';
+import { State } from '../types/state';
 import { AuthData } from '../types/AuthData';
 import MockAdapter from 'axios-mock-adapter';
 import thunk, { ThunkDispatch } from 'redux-thunk';
@@ -153,7 +153,7 @@ describe('Async actions', () => {
     ]);
   });
 
-  it('should fetch similar films film when GET /films/${id}/similar', async () => {
+  it('should fetch similar films film when GET /films/{id}/similar', async () => {
     mockAPI
       .onGet('/films/1/similar')
       .reply(200, mockFilms);
@@ -170,7 +170,7 @@ describe('Async actions', () => {
     ]);
   });
 
-  it('should fetch similar films film when GET /comments/${id}', async () => {
+  it('should fetch similar films film when GET /comments/{id}', async () => {
     mockAPI
       .onGet('/comments/1')
       .reply(200, mockReviews.comments);
@@ -187,7 +187,7 @@ describe('Async actions', () => {
     ]);
   });
 
-  it('POST /comments/${id}', async () => {
+  it('POST /comments/{id}', async () => {
     const postData: SendComment = {
       filmId: 1,
       comment: 'comment',
@@ -212,7 +212,7 @@ describe('Async actions', () => {
       redirectToRoute.type,
       addReviewAction.fulfilled.type
     ]);
-  }); 
+  });
 
   it('should fetch favorite films film when GET /favorite', async () => {
     mockAPI
@@ -235,7 +235,7 @@ describe('Async actions', () => {
     const postData: FavoriteStatsData = {
       filmId: 1,
       status: 1
-    }
+    };
 
     mockAPI
       .onPost('/favorite/1/1')

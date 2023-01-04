@@ -1,8 +1,8 @@
-import { favoriteData } from "./favorite-data";
-import { IFavoriteData } from "./favorite-data";
-import { getFavoriteFilmsAction, changeFilmFavoriteStatus } from "../api-actions";
-import { incrementFavoritesAction, decrementFavoritesAction } from "./favorite-data";
-import { makeFakeFilms } from "../../utils/mocks";
+import { favoriteData } from './favorite-data';
+import { IFavoriteData } from './favorite-data';
+import { getFavoriteFilmsAction, changeFilmFavoriteStatus } from '../api-actions';
+import { incrementFavoritesAction, decrementFavoritesAction } from './favorite-data';
+import { makeFakeFilms } from '../../utils/mocks';
 
 const mockFavoriteFilms = makeFakeFilms();
 
@@ -57,7 +57,7 @@ describe('Reducer: favoriteData', () => {
       state.areFavoriteOutdated = false;
       expect(favoriteData.reducer(state, {type: changeFilmFavoriteStatus.fulfilled.type }).areFavoriteOutdated)
         .toEqual(true);
-    })
+    });
   });
 
   describe('change favorites count test', () => {

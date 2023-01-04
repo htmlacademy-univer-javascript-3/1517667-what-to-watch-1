@@ -1,6 +1,6 @@
-import { filmData, IFilmData } from "./film-data";
-import { fetchFilmAction, fetchSimilarAction } from "../api-actions";
-import { makeFakeFilm, makeFakeFilms } from "../../utils/mocks";
+import { filmData, IFilmData } from './film-data';
+import { fetchFilmAction, fetchSimilarAction } from '../api-actions';
+import { makeFakeFilm, makeFakeFilms } from '../../utils/mocks';
 
 const mockOneFilm = makeFakeFilm();
 const mockSeveralFilms = makeFakeFilms();
