@@ -71,8 +71,9 @@ function PageContent() {
 
 export function Film() {
   const { id } = useParams();
+  const currentFilm = useAppSelector(getCurrentFilm);
   useEffect(() => {
-    if (id !== undefined) {
+    if (id !== undefined && id !== currentFilm?.id.toString()) {
       dispatch(fetchFilmAction(id));
       dispatch(fetchSimilarAction(id));
     }
@@ -80,7 +81,6 @@ export function Film() {
 
   const dispatch = useAppDispatch();
 
-  const currentFilm = useAppSelector(getCurrentFilm);
   const isFilmLoading = useAppSelector(isFilmInLoading);
 
   if (isFilmLoading) {

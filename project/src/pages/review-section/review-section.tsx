@@ -32,7 +32,7 @@ export const ReviewSection = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (id !== undefined) {
+    if (id !== undefined && id !== currentFilm?.id.toString()) {
       dispatch(fetchFilmAction(id));
       dispatch(fetchSimilarAction(id));
     }

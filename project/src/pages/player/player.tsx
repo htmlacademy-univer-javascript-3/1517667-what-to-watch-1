@@ -30,20 +30,19 @@ function PauseButton(onClick: () => void) {
 }
 
 export function Player() {
-  // const [isFullscreen, setIsFullscreen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [togglerProgress, setTogglerProgress] = useState(0);
   const [timeLeft, setTimeLeft] = useState('::');
   const { id } = useParams();
+  const currentFilm = useAppSelector(getCurrentFilm);
   useEffect(() => {
-    if (id !== undefined) {
+    if (id !== undefined && id !== currentFilm?.id.toString()) {
       dispatch(fetchFilmAction(id));
     }
     timeLoop();
   }, [id]);
   const dispatch = useAppDispatch();
 
-  const currentFilm = useAppSelector(getCurrentFilm);
   const isFilmLoading = useAppSelector(isFilmInLoading);
   const videoRef = useRef<HTMLVideoElement>(null);
 

@@ -3,7 +3,7 @@ import { Namespace } from '../../types/Namespace';
 import { IFilmInfo } from '../../types/IFilmInfo';
 import { getFavoriteFilmsAction, changeFilmFavoriteStatus } from '../api-actions';
 
-interface IFavoriteData {
+export interface IFavoriteData {
   favoriteFilms: IFilmInfo[];
   favoritesCount: number;
   areFavoriteLoading: boolean;
@@ -22,10 +22,10 @@ export const favoriteData = createSlice({
   initialState,
   reducers: {
     incrementFavoritesAction: (state) => {
-      state.favoritesCount = state.favoritesCount + 1;
+      state.favoritesCount += 1;
     },
     decrementFavoritesAction: (state) => {
-      state.favoritesCount = state.favoritesCount - 1;
+      state.favoritesCount -= 1;
     },
   },
   extraReducers(builder) {

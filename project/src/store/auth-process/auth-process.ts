@@ -3,16 +3,12 @@ import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
 import { AuthorizationStatus } from '../../components/private-route/private-route';
 import { Namespace } from '../../types/Namespace';
 
-interface IAuthInfo {
+export interface IAuthInfo {
   authorizationStatus: AuthorizationStatus;
-  isDataLoaded: boolean;
-  error: string | null;
 }
 
 const initialState = {
-  authorizationStatus: AuthorizationStatus.NoAuth,
-  isDataLoaded: false,
-  error: null,
+  authorizationStatus: AuthorizationStatus.Unknown,
 } as IAuthInfo;
 
 export const authProcess = createSlice({

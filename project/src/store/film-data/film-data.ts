@@ -3,7 +3,7 @@ import { Namespace } from '../../types/Namespace';
 import { IFilmInfo } from '../../types/IFilmInfo';
 import { fetchFilmAction, fetchSimilarAction } from '../api-actions';
 
-interface IFilmData {
+export interface IFilmData {
   currentFilm: IFilmInfo | undefined;
   filmLoading: boolean;
   similarFilms: IFilmInfo[];

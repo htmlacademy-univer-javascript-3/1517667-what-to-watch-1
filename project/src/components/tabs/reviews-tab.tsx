@@ -61,7 +61,7 @@ function ReviewsColumn({ comments } : ICommentsWrap) {
 }
 
 export function ReviewsTab() {
-  const outdated = useAppSelector(areReviewsOutdated);
+  const reviewsOutdated = useAppSelector(areReviewsOutdated);
   const currentFilm = useAppSelector(getCurrentFilm);
   const reviewsFilmId = useAppSelector(getReviewsFilmId);
   const areReviewsLoading = useAppSelector(areReviewsInLoading);
@@ -69,7 +69,7 @@ export function ReviewsTab() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (currentFilm !== undefined && (outdated || currentFilm.id !== reviewsFilmId)) {
+    if (currentFilm !== undefined && (reviewsOutdated || currentFilm.id !== reviewsFilmId)) {
       dispatch(fetchReviewsAction(currentFilm.id));
     }
   });
