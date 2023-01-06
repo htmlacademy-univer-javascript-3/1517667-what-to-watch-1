@@ -14,6 +14,7 @@ export function RatingComponent(props: RatingProps) {
             <input
               className='rating__input'
               id={`star-${10 - x}`}
+              data-testid={`${10 - x}`}
               type='radio'
               name='rating'
               value={10 - x}

@@ -2,8 +2,8 @@ import React from 'react';
 import { FormEvent, useState, useCallback } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { addReviewAction } from '../../store/api-actions';
-import { ReviewComponent } from './review-component';
-import { RatingComponent } from './rating-component';
+import { ReviewTypingComponent } from '../../components/review-typing-component/review-typing-component';
+import { RatingComponent } from '../../components/rating-component/rating-component';
 
 interface FilmId {
   filmId: number
@@ -24,7 +24,6 @@ export function ReviewEditor({ filmId }: FilmId) {
   );
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    //evt.preventDefault();
     dispatch(addReviewAction({ comment: review, filmId: filmId, rating: rating }));
   };
 
@@ -36,7 +35,7 @@ export function ReviewEditor({ filmId }: FilmId) {
           onChange={updateRating}
         />
         <div className='add-review__text'>
-          <ReviewComponent
+          <ReviewTypingComponent
             review={review}
             onChange={updateReview}
           />

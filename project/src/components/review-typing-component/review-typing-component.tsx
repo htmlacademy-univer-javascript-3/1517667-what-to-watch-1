@@ -3,7 +3,7 @@ type ReviewProps = {
   onChange: (reviewContent: string) => void;
 }
 
-export function ReviewComponent(props: ReviewProps) {
+export function ReviewTypingComponent(props: ReviewProps) {
   const { review, onChange } = props;
 
   return (
@@ -11,6 +11,7 @@ export function ReviewComponent(props: ReviewProps) {
       className='add-review__textarea'
       name='review'
       id='review'
+      data-testid='textarea'
       value={review}
       placeholder='Review text'
       onChange={(e) => onChange(e.target.value)}

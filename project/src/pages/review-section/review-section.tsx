@@ -6,7 +6,7 @@ import { Spinner } from '../../components/spinner/spinner';
 import { fetchFilmAction, fetchSimilarAction } from '../../store/api-actions';
 import { IFilm } from '../../types/IFilmInfo';
 import { getCurrentFilm, isFilmInLoading } from '../../store/film-data/selectors';
-import { ReviewPageHeader } from './review-page-header';
+import { ReviewPageHeader } from '../../components/review-page-header/review-page-header';
 import { ReviewEditor } from './review-editor';
 
 function FilmCardHeader({ film }: IFilm) {

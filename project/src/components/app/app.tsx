@@ -1,7 +1,7 @@
 import { MainPage } from '../../pages/main-page/main-page';
 import { SignIn } from '../../pages/signIn/sign-in';
 import { MyList } from '../../pages/my-list/my-list';
-import { Film } from '../../pages/movie-page/movie-page';
+import { FilmPage } from '../../pages/film-page/film-page';
 import { ReviewSection } from '../../pages/review-section/review-section';
 import { Player } from '../../pages/player/player';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
@@ -32,7 +32,7 @@ function App(): JSX.Element {
         </PrivateRoute>
       }
       />
-      <Route path="/films/:id" element={<Film />} />
+      <Route path="/films/:id" element={<FilmPage />} />
       <Route path="/films/:id/review" element={
         <PrivateRoute authStatus={authorizationStatus}>
           <ReviewSection />

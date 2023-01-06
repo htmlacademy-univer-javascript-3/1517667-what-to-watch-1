@@ -1,9 +1,9 @@
-import { Logo } from '../../components/logo/logo';
-import { UserBlock } from '../../components/user-block/user-block';
+import { Logo } from '../logo/logo';
+import { UserBlock } from '../user-block/user-block';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { IFilm } from '../../types/IFilmInfo';
-import { AuthorizationStatus } from '../../components/private-route/private-route';
+import { AuthorizationStatus } from '../private-route/private-route';
 import { getAuthorizationStatus } from '../../store/auth-process/selectors';
 
 export function ReviewPageHeader({ film }: IFilm) {
