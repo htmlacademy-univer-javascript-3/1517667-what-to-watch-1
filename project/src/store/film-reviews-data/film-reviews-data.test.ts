@@ -10,9 +10,11 @@ describe('Reducer: reviewsData', () => {
   beforeEach(() => {
     state = {
       reviewsFilmId: 0,
-      areReviewsOutdated: true,
       areReviewsLoading: false,
-      reviews: []
+      reviews: [],
+      reviewsOutdated: false,
+      isReviewSent: true,
+      errorsInSending: false
     };
   });
 
@@ -20,7 +22,6 @@ describe('Reducer: reviewsData', () => {
     expect(reviewsData.reducer(void 0, { type: 'UNKNOWN_ACTION' }))
       .toEqual({
         reviewsFilmId: 0,
-        areReviewsOutdated: true,
         areReviewsLoading: false,
         reviews: []
       });
@@ -31,18 +32,9 @@ describe('Reducer: reviewsData', () => {
       expect(reviewsData.reducer(state, { type: fetchReviewsAction.fulfilled.type, payload: mockCommentsInfo }))
         .toEqual({
           reviewsFilmId: mockCommentsInfo.filmId,
-          areReviewsOutdated: false,
           areReviewsLoading: false,
           reviews: mockCommentsInfo.comments
         });
-    });
-  });
-
-  describe('addReviewAction test', () => {
-    it('should update areReviewsOutdated to true on fulfilled', () => {
-      state.areReviewsOutdated = false;
-      expect(reviewsData.reducer(state, { type: addReviewAction.fulfilled.type }).areReviewsOutdated)
-        .toEqual(true);
     });
   });
 });

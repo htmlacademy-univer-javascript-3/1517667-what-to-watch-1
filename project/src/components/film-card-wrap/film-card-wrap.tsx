@@ -1,4 +1,4 @@
-import { IFilmInfo } from "../../types/IFilmInfo";
+import { IFilmInfo } from '../../types/IFilmInfo';
 
 type FilmCardWrapProps = {
   film: IFilmInfo;

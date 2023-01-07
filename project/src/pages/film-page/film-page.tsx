@@ -56,7 +56,7 @@ export function FilmPage() {
     <div>
       <section className='film-card film-card--full'>
         <FilmCardHero film={currentFilm} />
-        <FilmCardWrap film={currentFilm} fromFilmPage={true}>
+        <FilmCardWrap film={currentFilm} fromFilmPage>
           <Tabs />
         </FilmCardWrap>
       </section>

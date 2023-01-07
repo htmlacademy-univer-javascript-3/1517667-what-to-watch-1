@@ -5,16 +5,22 @@ import { Namespace } from '../../types/Namespace';
 
 export interface IAuthInfo {
   authorizationStatus: AuthorizationStatus;
+  authError: boolean;
 }
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
+  authError: false,
 } as IAuthInfo;
 
 export const authProcess = createSlice({
   name: Namespace.AuthInfo,
   initialState,
-  reducers: {},
+  reducers: {
+    resetAuthError: (state) => {
+      state.authError = false;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.fulfilled, (state) => {
@@ -27,10 +33,12 @@ export const authProcess = createSlice({
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
       .addCase(loginAction.rejected, (state) => {
-        state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.authError = true;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       });
   }
 });
+
+export const { resetAuthError } = authProcess.actions;

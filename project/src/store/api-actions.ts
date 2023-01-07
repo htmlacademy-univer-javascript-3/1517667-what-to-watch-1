@@ -54,7 +54,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   extra: AxiosInstance
 }>(
   'user/login',
-  async ({ login: email, password }, { dispatch, extra: api }) => {
+  async ({ email, password }, { dispatch, extra: api }) => {
     const { data: { token } } = await api.post<UserData>('/login', { email, password });
     saveToken(token);
     dispatch(redirectToRoute('/'));
@@ -105,6 +105,9 @@ export const fetchReviewsAction = createAsyncThunk<ICommentsInfo, number, {
 }>(
   'FETCH_FILM_REVIEWS',
   async (id, { dispatch, extra: api }) => {
+    /* eslint-disable no-console */
+    console.log('called');
+    /* eslint-enable no-console */
     const response = await api.get<IComment[]>(`/comments/${id}`);
     return {
       filmId: id,
@@ -120,13 +123,10 @@ export const addReviewAction = createAsyncThunk<void, SendComment, {
 }>(
   'ADD_REVIEW',
   async (data, { dispatch, extra: api }) => {
-    const result = await api.post(`/comments/${data.filmId}`, {
+    await api.post(`/comments/${data.filmId}`, {
       comment: data.comment,
       rating: data.rating
     });
-    if (result.status === 200) {
-      dispatch(redirectToRoute(`/films/${data.filmId}`));
-    }
   },
 );
 

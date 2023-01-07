@@ -3,7 +3,7 @@ import { SignIn } from '../../pages/signIn/sign-in';
 import { MyList } from '../../pages/my-list/my-list';
 import { FilmPage } from '../../pages/film-page/film-page';
 import { ReviewSection } from '../../pages/review-section/review-section';
-import { Player } from '../../pages/player/player';
+import { PlayerPage } from '../../pages/player-page/player-page';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { PrivateRoute } from '../private-route/private-route';
 import { Routes, Route } from 'react-router-dom';
@@ -39,7 +39,7 @@ function App(): JSX.Element {
         </PrivateRoute>
       }
       />
-      <Route path="/player/:id" element={<Player />} />
+      <Route path="/player/:id" element={<PlayerPage />} />
       <Route path="*" element={<NotFoundError />} />
     </Routes>
   );

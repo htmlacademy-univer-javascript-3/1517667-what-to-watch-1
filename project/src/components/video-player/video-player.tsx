@@ -26,6 +26,7 @@ export function VideoPlayer({
     <video
       className='small-film-card__image'
       ref={videoRef}
+      loop
       muted
       src={videoSrc}
       poster={posterSrc}

@@ -15,7 +15,7 @@ export function ReviewPageHeader({ film }: IFilm) {
       <nav className='breadcrumbs'>
         <ul className='breadcrumbs__list'>
           <li className='breadcrumbs__item'>
-            <Link to={`/film/${film.id}`} className='breadcrumbs__link'>{film.name}</Link>
+            <Link to={`/films/${film.id}`} className='breadcrumbs__link'>{film.name}</Link>
           </li>
           {authorizationStatus === AuthorizationStatus.Auth && (
             <li className='breadcrumbs__item'>

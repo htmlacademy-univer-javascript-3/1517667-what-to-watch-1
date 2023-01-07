@@ -1,10 +1,11 @@
 type RatingProps = {
   rating: number;
+  disabled: boolean;
   onChange: (ratingValue: number) => void;
 }
 
 export function RatingComponent(props: RatingProps) {
-  const { rating, onChange } = props;
+  const { rating, disabled, onChange } = props;
 
   return (
     <div className='rating'>
@@ -20,6 +21,7 @@ export function RatingComponent(props: RatingProps) {
               value={10 - x}
               checked={rating === 10 - x}
               onChange={() => onChange(10 - x)}
+              disabled={disabled}
             />
             <label className='rating__label' htmlFor={`star-${10 - x}`}>Rating {10 - x}</label>
           </>))}

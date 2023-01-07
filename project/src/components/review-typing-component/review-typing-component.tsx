@@ -1,10 +1,11 @@
 type ReviewProps = {
   review: string;
+  disabled: boolean;
   onChange: (reviewContent: string) => void;
 }
 
 export function ReviewTypingComponent(props: ReviewProps) {
-  const { review, onChange } = props;
+  const { review, disabled, onChange } = props;
 
   return (
     <textarea
@@ -15,8 +16,7 @@ export function ReviewTypingComponent(props: ReviewProps) {
       value={review}
       placeholder='Review text'
       onChange={(e) => onChange(e.target.value)}
-      maxLength={400}
-      minLength={50}
+      disabled={disabled}
       required
     >
     </textarea>

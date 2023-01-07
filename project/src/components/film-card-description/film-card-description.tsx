@@ -17,14 +17,13 @@ export function FilmCardDescription({ film }: IFilm) {
       </p>
 
       <div className='film-card__buttons'>
-        <button className='btn btn--play film-card__button' type='button'>
-          <Link to={`/player/${film.id}`}>
-            <svg viewBox='0 0 19 19' width='19' height='19'>
-              <use xlinkHref='#play-s'></use>
-            </svg>
-          </Link>
+        <Link className='btn btn--play film-card__button' to={`/player/${film.id}`}>
+          <svg viewBox='0 0 19 19' width='19' height='19'>
+            <use xlinkHref='#play-s'></use>
+          </svg>
           <span>Play</span>
-        </button>
+        </Link>
+
         {authorizationStatus === AuthorizationStatus.Auth && (<FilmCardUserButtons film={film} />)}
       </div>
     </div>

@@ -16,11 +16,11 @@ export function SmallFilmCard({ film }: IFilm) {
   };
   return (
     <article className='small-film-card catalog__films-card' onMouseEnter={mouseEnter} onMouseLeave={mouseLeave}>
-      <Link to={`/films/${film.id}`}>
+      <Link className='small-film-card__link' to={`/films/${film.id}`}>
         {hover ?
           <VideoPlayer videoSrc={film.previewVideoLink} posterSrc={film.previewImage} /> :
           <img src={film.previewImage} alt={film.name} width='280' height='175' />}
-        <h3 className='small-film-card__link small-film-card__title'>{film.name}</h3>
+        <h3 className='small-film-card__title'>{film.name}</h3>
       </Link>
     </article >
   );

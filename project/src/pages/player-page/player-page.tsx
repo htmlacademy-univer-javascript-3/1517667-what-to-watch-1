@@ -29,8 +29,9 @@ function PauseButton(onClick: () => void) {
   );
 }
 
-export function Player() {
+export function PlayerPage() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [togglerProgress, setTogglerProgress] = useState(0);
   const [timeLeft, setTimeLeft] = useState('::');
   const { id } = useParams();
@@ -39,6 +40,11 @@ export function Player() {
     if (id !== undefined && id !== currentFilm?.id.toString()) {
       dispatch(fetchFilmAction(id));
     }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        setIsFullscreen(false);
+      }
+    });
     timeLoop();
   }, [id]);
   const dispatch = useAppDispatch();
@@ -96,36 +102,38 @@ export function Player() {
       <video
         ref={videoRef}
         src={currentFilm.videoLink}
-        poster={currentFilm.previewImage}
+        poster={currentFilm.backgroundImage}
         className='player__video'
       >
       </video>
 
-      <Link to={`/films/${id}`} className='small-film-card__link'>
-        <button type='button' className='player__exit'>Exit</button>
-      </Link>
+      {!isFullscreen &&
+        <>
+          <Link to={`/films/${id}`} className='small-film-card__link'>
+            <button type='button' className='player__exit'>Exit</button>
+          </Link>
 
-      <div className='player__controls'>
-        <div className='player__controls-row'>
-          <div className='player__time'>
-            <progress className='player__progress' value={togglerProgress} max='100'></progress>
-            <div className='player__toggler' style={{ left: `${togglerProgress}%` }}>Toggler</div>
+          <div className='player__controls'>
+            <div className='player__controls-row'>
+              <div className='player__time'>
+                <progress className='player__progress' value={togglerProgress} max='100'></progress>
+                <div className='player__toggler' style={{ left: `${togglerProgress}%` }}>Toggler</div>
+              </div>
+              <div className='player__time-value'>{timeLeft}</div>
+            </div>
+            <div className='player__controls-row'>
+              {isPlaying ? PauseButton(() => pauseVideo()) : PlayButton(() => playVideo())}
+              <div className='player__name'>Transpotting</div>
+
+              <button type='button' className='player__full-screen' onClick={() => setIsFullscreen(true)}>
+                <svg viewBox='0 0 27 27' width='27' height='27'>
+                  <use xlinkHref='#full-screen'></use>
+                </svg>
+                <span>Full screen</span>
+              </button>
+            </div>
           </div>
-          <div className='player__time-value'>{timeLeft}</div>
-        </div>
-
-        <div className='player__controls-row'>
-          {isPlaying ? PauseButton(() => pauseVideo()) : PlayButton(() => playVideo())}
-          <div className='player__name'>Transpotting</div>
-
-          <button type='button' className='player__full-screen'>
-            <svg viewBox='0 0 27 27' width='27' height='27'>
-              <use xlinkHref='#full-screen'></use>
-            </svg>
-            <span>Full screen</span>
-          </button>
-        </div>
-      </div>
+        </>}
     </div>
   );
 }

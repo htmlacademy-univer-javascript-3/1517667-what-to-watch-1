@@ -5,10 +5,15 @@ import { IFilm } from '../../types/IFilmInfo';
 import { FilmCardWrap } from '../../components/film-card-wrap/film-card-wrap';
 import { FilmCardDescription } from '../../components/film-card-description/film-card-description';
 import { NotFoundError } from '../not-found-error/not-found-error';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getPromoFilm, isPromoLoading } from '../../store/general-data/selector';
+import { areFavoriteFilmsOutdated, areFavoriteFilmsInLoading } from '../../store/favorite-data/selectors';
 import { MainPageCatalogue } from './main-page-catalogue';
 import { Spinner } from '../../components/spinner/spinner';
+import { useEffect } from 'react';
+import { setPromoFilmInfo, getFavoriteFilmsAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/auth-process/selectors';
+import { AuthorizationStatus } from '../../components/private-route/private-route';
 
 function Header() {
   return (
@@ -35,9 +40,19 @@ function FilmCard({ film }: IFilm) {
 }
 
 export function MainPage() {
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const favoritesOutdated = useAppSelector(areFavoriteFilmsOutdated);
+  useEffect(() => {
+    dispatch(setPromoFilmInfo());
+    if (authStatus === AuthorizationStatus.Auth && favoritesOutdated) {
+      dispatch(getFavoriteFilmsAction());
+    }
+  }, []);
   const promo = useAppSelector(getPromoFilm);
   const promoLoading = useAppSelector(isPromoLoading);
-  if (promoLoading) {
+  const favoritesLoading = useAppSelector(areFavoriteFilmsInLoading);
+  if (promoLoading || favoritesLoading) {
     return <Spinner />;
   }
 

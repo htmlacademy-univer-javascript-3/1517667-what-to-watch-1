@@ -40,7 +40,7 @@ describe('Component: ReviewPageHeader', () => {
         <HistoryRouter history={history}>
           <Routes>
             <Route
-              path={'/film/1'}
+              path={'/films/1'}
               element={<h1>Film page rendered</h1>}
             />
             <Route

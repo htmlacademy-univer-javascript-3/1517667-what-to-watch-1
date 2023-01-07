@@ -21,7 +21,6 @@ const store = mockStore({
   },
   FILM_REVIEWS_DATA: {
     reviewsFilmId: 1,
-    areReviewsOutdated: false,
     areReviewsLoading: false,
     reviews: []
   }

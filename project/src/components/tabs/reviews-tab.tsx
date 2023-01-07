@@ -61,9 +61,9 @@ function ReviewsColumn({ comments } : ICommentsWrap) {
 }
 
 export function ReviewsTab() {
-  const reviewsOutdated = useAppSelector(areReviewsOutdated);
   const currentFilm = useAppSelector(getCurrentFilm);
   const reviewsFilmId = useAppSelector(getReviewsFilmId);
+  const reviewsOutdated = useAppSelector(areReviewsOutdated);
   const areReviewsLoading = useAppSelector(areReviewsInLoading);
   const reviews = useAppSelector(getReviews);
   const dispatch = useAppDispatch();

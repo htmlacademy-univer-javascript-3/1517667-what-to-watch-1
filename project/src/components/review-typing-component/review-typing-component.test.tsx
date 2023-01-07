@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 describe('Component: ReviewTypingComponent', () => {
   it('should render correctly', () => {
     render(
-      <ReviewTypingComponent review='' onChange={jest.fn()} />
+      <ReviewTypingComponent review='' disabled={false} onChange={jest.fn()} />
     );
 
     expect(screen.getByPlaceholderText('Review text')).toBeInTheDocument();
@@ -15,7 +15,7 @@ describe('Component: ReviewTypingComponent', () => {
     const onChange = jest.fn();
 
     render(
-      <ReviewTypingComponent review='' onChange={onChange} />
+      <ReviewTypingComponent review='' disabled={false} onChange={onChange} />
     );
 
     await userEvent.type(screen.getByTestId('textarea'), 'smt');

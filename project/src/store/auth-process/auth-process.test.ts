@@ -9,6 +9,7 @@ describe('Reducer: authProcess', () => {
   beforeEach(() => {
     state = {
       authorizationStatus: AuthorizationStatus.Unknown,
+      authError: false
     };
   });
 
