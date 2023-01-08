@@ -1,5 +1,5 @@
 import { MainPage } from '../../pages/main-page/main-page';
-import { SignIn } from '../../pages/signIn/sign-in';
+import { SignIn } from '../../pages/sign-in/sign-in';
 import { MyList } from '../../pages/my-list/my-list';
 import { FilmPage } from '../../pages/film-page/film-page';
 import { ReviewSection } from '../../pages/review-section/review-section';
