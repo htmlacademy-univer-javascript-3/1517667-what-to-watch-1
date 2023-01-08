@@ -1,5 +1,5 @@
 import { IFilmInfo } from '../types/IFilmInfo';
-import { ICommentsInfo } from '../types/IComment';
+import { IComment, ICommentsInfo } from '../types/IComment';
 
 export const makeFakeFilm = (): IFilmInfo => ({
   name: 'Snatch',
@@ -99,5 +99,18 @@ export const makeFakeCommentsInfo = (): ICommentsInfo => (
         'date': '2022-06-23T12:25:36.946Z'
       }
     ]
+  }
+);
+
+export const makeFakeComment = (): IComment => (
+  {
+    'id': 1,
+    'user': {
+      'id': 17,
+      'name': 'Emely'
+    },
+    'rating': 9.9,
+    'comment': 'I personally found this movie to be boring. Definitely one of the most boring movies I\'ve ever seen.',
+    'date': '2022-06-03T12:25:36.946Z'
   }
 );

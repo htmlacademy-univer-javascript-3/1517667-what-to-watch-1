@@ -1,55 +1,15 @@
 import { IComment } from '../../types/IComment';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { Spinner } from '../spinner/spinner';
+import { SingleReviewBlock } from './single-review-block';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { useEffect } from 'react';
 import { fetchReviewsAction } from '../../store/api-actions';
 import { getCurrentFilm } from '../../store/film-data/selectors';
 import { getReviews, getReviewsFilmId, areReviewsInLoading, areReviewsOutdated } from '../../store/film-reviews-data/selector';
 
-interface ICommentWrap {
-  comment: IComment
-}
-
 interface ICommentsWrap {
   comments: IComment[]
-}
-
-function SingleReviewBlock({ comment } : ICommentWrap) {
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-
-  const formatTime = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return `${months[date.getMonth()]} ${date.getDay()}, ${date.getFullYear()}`;
-  };
-
-  return (
-    <div className='review'>
-      <blockquote className='review__quote'>
-        <p className='review__text'>{comment.comment}</p>
-
-        <footer className='review__details'>
-          <cite className='review__author'>{comment.user.name}</cite>
-          <time className='review__date' dateTime={comment.date}>{formatTime(comment.date)}</time>
-        </footer>
-      </blockquote>
-
-      <div className='review__rating'>{comment.rating}</div>
-    </div>
-  );
 }
 
 function ReviewsColumn({ comments } : ICommentsWrap) {
@@ -60,10 +20,10 @@ function ReviewsColumn({ comments } : ICommentsWrap) {
   );
 }
 
-export function ReviewsTab() {
-  const reviewsOutdated = useAppSelector(areReviewsOutdated);
+export function TabReviews() {
   const currentFilm = useAppSelector(getCurrentFilm);
   const reviewsFilmId = useAppSelector(getReviewsFilmId);
+  const reviewsOutdated = useAppSelector(areReviewsOutdated);
   const areReviewsLoading = useAppSelector(areReviewsInLoading);
   const reviews = useAppSelector(getReviews);
   const dispatch = useAppDispatch();

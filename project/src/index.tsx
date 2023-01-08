@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { store } from './store';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { browserHistory } from './browser-history';
 import { HistoryRouter } from './components/history-router/history-router';
-import { setInitFilmsInfo, setPromoFilmInfo, checkAuthAction, getFavoriteFilmsAction } from './store/api-actions';
+import { setInitFilmsInfo, setPromoFilmInfo } from './store/api-actions';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -13,13 +15,12 @@ const root = ReactDOM.createRoot(
 
 store.dispatch(setInitFilmsInfo());
 store.dispatch(setPromoFilmInfo());
-store.dispatch(checkAuthAction());
-store.dispatch(getFavoriteFilmsAction());
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <HistoryRouter history={browserHistory}>
+        <ToastContainer />
         <App />
       </HistoryRouter>
     </Provider>

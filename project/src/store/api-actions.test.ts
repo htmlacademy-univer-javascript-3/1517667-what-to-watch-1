@@ -56,7 +56,7 @@ describe('Async actions', () => {
   });
 
   it('should dispatch RequriedAuthorization and RedirectToRoute when POST /login', async () => {
-    const fakeUser: AuthData = { login: 'test@test.ru', password: '123456' };
+    const fakeUser: AuthData = { email: 'test@test.ru', password: '123456' };
 
     mockAPI
       .onPost('/login')
@@ -209,7 +209,6 @@ describe('Async actions', () => {
 
     expect(actions).toEqual([
       addReviewAction.pending.type,
-      redirectToRoute.type,
       addReviewAction.fulfilled.type
     ]);
   });

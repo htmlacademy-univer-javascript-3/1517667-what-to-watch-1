@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 export function NotFoundError() {
   return (
-    <React.Fragment>
+    <div className='page-content'>
       <h1>404 Not Found</h1>
       <Link to="/">Return to main page</Link>
-    </React.Fragment>
+    </div>
   );
 }

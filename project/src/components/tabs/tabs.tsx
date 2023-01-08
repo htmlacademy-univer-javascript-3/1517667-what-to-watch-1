@@ -1,24 +1,24 @@
 import React from 'react';
-import { OverviewTab } from './overview-tab';
-import { DetailsTab } from './details-tab';
-import { ReviewsTab } from './reviews-tab';
-import { ITab } from './ITabs';
+import { TabOverview } from '../tab-overview/tab-overview';
+import { TabDetails } from '../tab-details/tab-details';
+import { TabReviews } from '../tab-reviews/tab-reviews';
+import { ITab } from '../../types/ITabs';
 
 const tabs = [
   {
     id: 0,
     title: 'Overview',
-    child: OverviewTab
+    child: TabOverview
   },
   {
     id: 1,
     title: 'Details',
-    child: DetailsTab
+    child: TabDetails
   },
   {
     id: 2,
     title: 'Reviews',
-    child: ReviewsTab
+    child: TabReviews
   }
 ] as ITab[];
 

@@ -1,9 +1,9 @@
 import { MainPage } from '../../pages/main-page/main-page';
-import { SignIn } from '../../pages/signIn/sign-in';
+import { SignIn } from '../../pages/sign-in/sign-in';
 import { MyList } from '../../pages/my-list/my-list';
-import { Film } from '../../pages/movie-page/movie-page';
+import { FilmPage } from '../../pages/film-page/film-page';
 import { ReviewSection } from '../../pages/review-section/review-section';
-import { Player } from '../../pages/player/player';
+import { PlayerPage } from '../../pages/player-page/player-page';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { PrivateRoute } from '../private-route/private-route';
 import { Routes, Route } from 'react-router-dom';
@@ -32,14 +32,14 @@ function App(): JSX.Element {
         </PrivateRoute>
       }
       />
-      <Route path="/films/:id" element={<Film />} />
+      <Route path="/films/:id" element={<FilmPage />} />
       <Route path="/films/:id/review" element={
         <PrivateRoute authStatus={authorizationStatus}>
           <ReviewSection />
         </PrivateRoute>
       }
       />
-      <Route path="/player/:id" element={<Player />} />
+      <Route path="/player/:id" element={<PlayerPage />} />
       <Route path="*" element={<NotFoundError />} />
     </Routes>
   );

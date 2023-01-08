@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Spinner } from '../../components/spinner/spinner';
-import { fetchFilmAction, fetchSimilarAction } from '../../store/api-actions';
+import { fetchFilmAction } from '../../store/api-actions';
+import { resetErrors } from '../../store/film-reviews-data/film-reviews-data';
 import { IFilm } from '../../types/IFilmInfo';
 import { getCurrentFilm, isFilmInLoading } from '../../store/film-data/selectors';
-import { ReviewPageHeader } from './review-page-header';
+import { ReviewPageHeader } from '../../components/review-page-header/review-page-header';
 import { ReviewEditor } from './review-editor';
 
 function FilmCardHeader({ film }: IFilm) {
@@ -34,7 +35,7 @@ export const ReviewSection = () => {
   useEffect(() => {
     if (id !== undefined && id !== currentFilm?.id.toString()) {
       dispatch(fetchFilmAction(id));
-      dispatch(fetchSimilarAction(id));
+      dispatch(resetErrors());
     }
   }, [id]);
 

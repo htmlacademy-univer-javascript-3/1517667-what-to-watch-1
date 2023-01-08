@@ -5,8 +5,14 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import { HistoryRouter } from '../../components/history-router/history-router';
+import { AuthorizationStatus } from '../../components/private-route/private-route';
 
 const mockStore = configureMockStore();
+const store = mockStore({
+  AUTH_INFO: {
+    authorizationStatus: AuthorizationStatus.Auth
+  }
+});
 
 describe('Component: SignIn', () => {
   it('should render "SignIn" when user navigate to "login" url', async () => {
@@ -14,7 +20,7 @@ describe('Component: SignIn', () => {
     history.push('/login');
 
     render(
-      <Provider store={mockStore({})}>
+      <Provider store={store}>
         <HistoryRouter history={history}>
           <SignIn />
         </HistoryRouter>
