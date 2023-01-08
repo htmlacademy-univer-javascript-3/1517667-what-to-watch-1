@@ -7,13 +7,14 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { browserHistory } from './browser-history';
 import { HistoryRouter } from './components/history-router/history-router';
-import { setInitFilmsInfo } from './store/api-actions';
+import { setInitFilmsInfo, setPromoFilmInfo } from './store/api-actions';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
 store.dispatch(setInitFilmsInfo());
+store.dispatch(setPromoFilmInfo());
 
 root.render(
   <React.StrictMode>

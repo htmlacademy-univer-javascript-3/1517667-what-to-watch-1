@@ -15,7 +15,6 @@ describe('Component: VideoPlayer', () => {
         posterSrc=''
       />,
     );
-    
     await new Promise((r) => setTimeout(r, 1000));
 
     expect(window.HTMLVideoElement.prototype.play).toBeCalled();

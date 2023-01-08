@@ -11,7 +11,7 @@ import { makeFakeFilm } from '../../utils/mocks';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
-history.push('/films/1');
+history.push('/films/1/review');
 
 const store = mockStore({
   AUTH_INFO: { authorizationStatus: AuthorizationStatus.Auth }

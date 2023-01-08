@@ -44,8 +44,8 @@ export function MainPage() {
   const authStatus = useAppSelector(getAuthorizationStatus);
   const favoritesOutdated = useAppSelector(areFavoriteFilmsOutdated);
   useEffect(() => {
-    dispatch(setPromoFilmInfo());
     if (authStatus === AuthorizationStatus.Auth && favoritesOutdated) {
+      dispatch(setPromoFilmInfo());
       dispatch(getFavoriteFilmsAction());
     }
   }, []);

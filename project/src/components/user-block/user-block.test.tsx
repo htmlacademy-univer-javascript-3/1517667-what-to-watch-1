@@ -42,8 +42,8 @@ describe('Component: FilmCardUserButtons', () => {
   });
 
   it('redirects', () => {
-    const middlewares = [thunk]
-    const mockStore = configureMockStore(middlewares)
+    const middlewares = [thunk];
+    const mockStore = configureMockStore(middlewares);
     const store = mockStore({
       AUTH_INFO: { authorizationStatus: AuthorizationStatus.Auth }
     });

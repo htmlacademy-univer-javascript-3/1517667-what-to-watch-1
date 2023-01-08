@@ -3,7 +3,7 @@ import { Spinner } from '../spinner/spinner';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { getCurrentFilm, isFilmInLoading } from '../../store/film-data/selectors';
 
-export function DetailsTab() {
+export function TabDetails() {
   const currentFilm = useAppSelector(getCurrentFilm);
   const isFilmLoading = useAppSelector(isFilmInLoading);
 

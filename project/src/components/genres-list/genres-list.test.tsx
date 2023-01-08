@@ -17,7 +17,7 @@ describe('Component: GenresList', () => {
   it('should render correctly', () => {
     render(
       <Provider store={store}>
-        <GenresList changeFunction={(genre) => {}}/>
+        <GenresList changeFunction={jest.fn()}/>
       </Provider>,
     );
 
@@ -30,7 +30,7 @@ describe('Component: GenresList', () => {
     let updatedGenre = '';
     render(
       <Provider store={store}>
-        <GenresList changeFunction={(genre) => {updatedGenre = genre}}/>
+        <GenresList changeFunction={(genre) => {updatedGenre = genre;}}/>
       </Provider>,
     );
 

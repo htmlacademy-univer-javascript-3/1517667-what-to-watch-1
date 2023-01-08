@@ -209,7 +209,6 @@ describe('Async actions', () => {
 
     expect(actions).toEqual([
       addReviewAction.pending.type,
-      redirectToRoute.type,
       addReviewAction.fulfilled.type
     ]);
   });

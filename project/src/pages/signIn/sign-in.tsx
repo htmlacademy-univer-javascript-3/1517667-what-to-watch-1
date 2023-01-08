@@ -25,7 +25,7 @@ export function SignIn() {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const authStatus = useAppSelector(getAuthorizationStatus);
-  const dispatch = useAppDispatch(); //sign-in__field--error
+  const dispatch = useAppDispatch();
 
   if (authStatus === AuthorizationStatus.Auth) {
     dispatch(redirectToRoute('/'));

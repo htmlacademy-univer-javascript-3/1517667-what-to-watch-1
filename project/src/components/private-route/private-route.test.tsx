@@ -30,7 +30,7 @@ describe('Component: PrivateRoute', () => {
               path='/private'
               element={
                 <PrivateRoute
-                authStatus={AuthorizationStatus.NoAuth}
+                  authStatus={AuthorizationStatus.NoAuth}
                 >
                   <h1>Private Route</h1>
                 </PrivateRoute>
@@ -62,7 +62,7 @@ describe('Component: PrivateRoute', () => {
               path='/private'
               element={
                 <PrivateRoute
-                authStatus={AuthorizationStatus.Auth}
+                  authStatus={AuthorizationStatus.Auth}
                 >
                   <h1>Private Route</h1>
                 </PrivateRoute>

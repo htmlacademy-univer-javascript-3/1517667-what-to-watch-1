@@ -23,7 +23,10 @@ describe('Reducer: reviewsData', () => {
       .toEqual({
         reviewsFilmId: 0,
         areReviewsLoading: false,
-        reviews: []
+        reviews: [],
+        reviewsOutdated: true,
+        isReviewSent: true,
+        errorsInSending: false
       });
   });
 
@@ -33,7 +36,24 @@ describe('Reducer: reviewsData', () => {
         .toEqual({
           reviewsFilmId: mockCommentsInfo.filmId,
           areReviewsLoading: false,
-          reviews: mockCommentsInfo.comments
+          reviews: mockCommentsInfo.comments,
+          reviewsOutdated: false,
+          isReviewSent: true,
+          errorsInSending: false,
+        });
+    });
+  });
+
+  describe('addReviewAction test', () => {
+    it('should set outdated', () => {
+      expect(reviewsData.reducer(state, { type: addReviewAction.fulfilled.type, payload: mockCommentsInfo }))
+        .toEqual({
+          reviewsFilmId: 0,
+          areReviewsLoading: false,
+          reviews: [],
+          reviewsOutdated: true,
+          isReviewSent: true,
+          errorsInSending: false,
         });
     });
   });

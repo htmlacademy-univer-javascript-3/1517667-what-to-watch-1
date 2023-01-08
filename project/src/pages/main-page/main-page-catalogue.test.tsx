@@ -1,6 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Routes, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
@@ -16,7 +14,6 @@ const store = mockStore({
   GENERAL_DATA: {
     allFilms: [mockFilm],
     genresList: ['All genres', mockFilm.genre],
-    // genreToFilms: {'All genres': [mockFilm]},
     promo: mockFilm,
     currentGenre: 'All genres',
     pageFilms: [[mockFilm]],
