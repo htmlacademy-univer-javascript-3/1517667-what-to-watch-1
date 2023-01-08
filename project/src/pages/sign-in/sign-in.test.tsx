@@ -12,7 +12,7 @@ const store = mockStore({
   AUTH_INFO: {
     authorizationStatus: AuthorizationStatus.Auth
   }
-})
+});
 
 describe('Component: SignIn', () => {
   it('should render "SignIn" when user navigate to "login" url', async () => {

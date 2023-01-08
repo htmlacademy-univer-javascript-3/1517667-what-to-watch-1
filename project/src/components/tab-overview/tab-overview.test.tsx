@@ -9,7 +9,7 @@ const mockStore = configureMockStore();
 const mockFilm = makeFakeFilm();
 
 const store = mockStore({
-  [Namespace.FilmData]: { 
+  [Namespace.FilmData]: {
     currentFilm: mockFilm,
     isFilmLoading: false
   }

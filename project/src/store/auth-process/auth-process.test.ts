@@ -16,7 +16,7 @@ describe('Reducer: authProcess', () => {
   describe('checkAuthAction test', () => {
     it('should update authorizationStatus to "AUTH" if checkAuthAction fulfilled', () => {
       expect(authProcess.reducer(state, { type: checkAuthAction.fulfilled.type }))
-        .toEqual({ 
+        .toEqual({
           authorizationStatus: AuthorizationStatus.Auth,
           authError: false
         });
@@ -24,7 +24,7 @@ describe('Reducer: authProcess', () => {
 
     it('should update authorizationStatus to "NO_AUTH" if checkAuthAction rejected', () => {
       expect(authProcess.reducer(state, { type: checkAuthAction.rejected.type }))
-        .toEqual({ 
+        .toEqual({
           authorizationStatus: AuthorizationStatus.NoAuth,
           authError: false
         });
@@ -34,7 +34,7 @@ describe('Reducer: authProcess', () => {
   describe('loginAction test', () => {
     it('should update authorizationStatus to "AUTH" if loginAction fulfilled', () => {
       expect(authProcess.reducer(state, { type: loginAction.fulfilled.type }))
-        .toEqual({ 
+        .toEqual({
           authorizationStatus: AuthorizationStatus.Auth,
           authError: false
         });
